@@ -1,0 +1,4 @@
+node_modules/
+work/screenshots/
+.DS_Store
+Thumbs.db
