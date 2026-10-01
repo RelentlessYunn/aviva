@@ -18,7 +18,7 @@ Branch: `claude/elegant-curie-dduigw` → PR into `main` (user merges).
 | Local tooling | Yes | `npm install` done; `npm run serve` on :8080; `tools/shoot.mjs` works with software WebGL (SwiftShader). |
 
 ## Phase checklist
-- [x] **Phase 0 — Setup**: mission saved, folders, npm install, shoot tool verified, network checked, ORYZO-1 repo cloned, commit + push, draft PR.
+- [x] **Phase 0 — Setup**: mission saved, folders, npm install, shoot tool verified, network checked, ORYZO-1 repo cloned, commit + push, draft PR (#1).
 - [ ] **Phase 1 — Discovery**: reference teardown (reference-analyst), paper + parody research (web-researcher A), tech research (web-researcher B). Lead reviews all three.
 - [ ] **Phase 2 — Concepts**: 3 concepts (creative-director), lead scores + chooses.
 - [ ] **Phase 3 — Brief, look-dev, skeleton**: creative brief; then in parallel design system + paper look-dev, technical skeleton, fact-check. Lead iterates paper look until it's clearly real.
@@ -27,10 +27,13 @@ Branch: `claude/elegant-curie-dduigw` → PR into `main` (user merges).
 - [ ] **Phase 6 — Final QA + hand-over**: QA run, README, CREDITS, LICENSE, `git rm -r reference`, PR ready.
 
 ## Log
-- 2026-10-01 — Phase 0 done. Placeholder `docs/index.html`; `docs/.nojekyll`; `work/reviews/`.
+- 2026-10-01 — Phase 0 done. Placeholder `docs/index.html`; `docs/.nojekyll`; `work/reviews/`. Draft PR: https://github.com/RelentlessYunn/aviva/pull/1
+- 2026-10-01 — Pinned three 0.186.1 / gsap 3.15.0 / lenis 1.3.26 as devDependencies (exact). Phase 1 launched.
 
 ## Running now
-- (nothing)
+- reference-analyst → `work/02-reference-teardown.md`
+- web-researcher (A) → `work/01-research.md`
+- web-researcher (B) → `work/01b-tech-research.md`
 
 ## Next step
-- Phase 1: launch reference-analyst (teardown), web-researcher A (paper + parody), web-researcher B (tech) in parallel.
+- When all three land: read in full, send back if thin, commit; then Phase 2 (concepts).
