@@ -19,7 +19,7 @@ Branch: `claude/elegant-curie-dduigw` → PR into `main` (user merges).
 
 ## Phase checklist
 - [x] **Phase 0 — Setup**: mission saved, folders, npm install, shoot tool verified, network checked, ORYZO-1 repo cloned, commit + push, draft PR (#1).
-- [ ] **Phase 1 — Discovery**: reference teardown (reference-analyst), paper + parody research (web-researcher A), tech research (web-researcher B). Lead reviews all three.
+- [x] **Phase 1 — Discovery**: reference teardown (reference-analyst), paper + parody research (web-researcher A), tech research (web-researcher B). Lead reviews all three.
 - [ ] **Phase 2 — Concepts**: 3 concepts (creative-director), lead scores + chooses.
 - [ ] **Phase 3 — Brief, look-dev, skeleton**: creative brief; then in parallel design system + paper look-dev, technical skeleton, fact-check. Lead iterates paper look until it's clearly real.
 - [ ] **Phase 4 — Build**: sections in chunks, screenshots between chunks.
@@ -31,10 +31,10 @@ Branch: `claude/elegant-curie-dduigw` → PR into `main` (user merges).
 - 2026-10-01 — Pinned three 0.186.1 / gsap 3.15.0 / lenis 1.3.26 as devDependencies (exact). Phase 1 launched.
 - 2026-10-01 19:12 UTC — All three Phase 1 agents hit an API usage limit before writing anything; resumed after the reset with their context intact, and told to write their files incrementally.
 - 2026-10-01 — Research A accepted (sourced, confidence-tagged). Teardown accepted (measured 63 vh scroll map, 54 signature elements, 48-item checklist). Collision decisions #7–#10 logged (no fold-to-encrypt, no blank-A4 weights, no power-draw card, no Pro Max/glowing pills). Concepts brief sent.
+- 2026-10-01 — Tech research accepted, with a working prototype in `work/scripts/paper-proto/` (folds, dart plane, halving, tear, crumple, pencil, ink front, picking, contact shadow) and a tested import map + `work/scripts/copy-vendor.sh`. Look-dev targets logged (#12). **Phase 1 complete.**
 
 ## Running now
-- web-researcher (B) → `work/01b-tech-research.md` (partly written)
 - creative-director → `work/03-concepts.md` (Phase 2 started early, in parallel with tech research)
 
 ## Next step
-- Review tech research when it lands. Review 3 concepts, score on 5 criteria, choose, log in decisions.md. Then Phase 3 brief.
+- Review 3 concepts, score on 5 criteria, choose, log in decisions.md. Then Phase 3 brief.

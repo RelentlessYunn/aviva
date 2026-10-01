@@ -19,6 +19,8 @@ ADDONS=(
   postprocessing/ShaderPass.js
   postprocessing/OutputPass.js
   utils/BufferGeometryUtils.js
+  shaders/HorizontalBlurShader.js
+  shaders/VerticalBlurShader.js
   misc/GPUComputationRenderer.js
   math/ImprovedNoise.js
   # optional extras (uncomment when a section needs them):

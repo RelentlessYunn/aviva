@@ -54,6 +54,7 @@ uniform vec4  uFoldA[MAX_FOLDS];   // xyz: hinge axis (unit), w: angle (rad). si
 uniform vec4  uFoldM[MAX_FOLDS];   // xyz: unit direction (perp. to axis) pointing to the MOVING side, w: 1 = use rest mask
 uniform vec4  uFoldR[MAX_FOLDS];   // rest-space mask: apply only if dot(rest.xy, xy) + z > 0
 uniform vec4  uBend;               // x: curvature (1/m), y: axis angle (rad) of the bend line, z: twist (rad/m along y), w: flutter amplitude (m)
+uniform vec4  uPleat;              // x: pleat period (m, mountain-to-valley distance), y: fold angle gamma 0..pi/2 (0 = flat, pi/2 = closed), z: fan opening (rad per m along x), w: fan pivot distance below the sheet (m)
 uniform vec4  uFlutter;            // x: time, y: frequency, z: seed
 uniform float uCrumple;            // 0..1
 uniform vec4  uFacet[N_FACETS];    // xyz unit normal, w plane distance (m): baked in JS with a seeded RNG
@@ -104,24 +105,19 @@ vec3 wadPoint(vec2 rest, float c){
 }
 vec3 deformPoint(vec2 rest, out float crumpleW) {
   vec3 R0 = vec3(rest, 0.0), p = R0;
-  #ifdef DBG1
-  crumpleW = 0.0; return p;
-  #endif
   for (int i = 0; i < MAX_FOLDS; i++) { if (i >= uFoldCount) break; applyFold(p, R0, uFoldQ[i], uFoldA[i], uFoldM[i], uFoldR[i]); }
-  #ifdef DBG2
-  crumpleW = 0.0; return p;
-  #endif
+  // accordion pleats (hand fan / paper fan): triangular wave, arc-length preserving, then optional radial 'fan' mapping
+  if (uPleat.y > 1e-4) {
+    float w = uPleat.x, g = uPleat.y, sx = p.x + 0.5 * uSheet.x, i = floor(sx / w), f = sx - i * w; float up = mod(i, 2.0) < 0.5 ? 1.0 : -1.0;
+    float x0 = i * w * cos(g), z0 = (up > 0.0 ? 0.0 : w * sin(g));
+    p.x = x0 + f * cos(g) - 0.5 * uSheet.x * cos(g); p.z += z0 + up * f * sin(g);
+    if (uPleat.z > 1e-4) { float ang = p.x * uPleat.z, rr = uPleat.w + (p.y + 0.5 * uSheet.y); p.x = sin(ang) * rr; p.y = cos(ang) * rr - uPleat.w - 0.5 * uSheet.y; }
+  }
   // global bend about a line through the origin with direction (cos y, sin y): arc-length preserving, p.z lifts
   if (abs(uBend.x) > 1e-4) { vec2 ax = vec2(cos(uBend.y), sin(uBend.y)), nrm = vec2(-ax.y, ax.x); float s = dot(p.xy, nrm), k = uBend.x, an = s * k;
     vec2 along = ax * dot(p.xy, ax); p.xy = along + nrm * (sin(an) / k); p.z += (1.0 - cos(an)) / k; }
   if (abs(uBend.z) > 1e-4) { float a = p.y * uBend.z; float cs = cos(a), sn = sin(a); p.xz = vec2(cs * p.x - sn * p.z, sn * p.x + cs * p.z); }
-  #ifdef DBG3
-  crumpleW = 0.0; return p;
-  #endif
   if (uBend.w > 0.0) { p.z += uBend.w * (vnoise(vec3(p.xy * uFlutter.y, uFlutter.x)) - 0.5) * 2.0; }
-  #ifdef DBG4
-  crumpleW = 0.0; return p;
-  #endif
   crumpleW = smoothstep(0.0, 1.0, uCrumple);
   if (uCrumple > 0.0) {
     vec3 wad = wadPoint(rest, uCrumple);
@@ -138,14 +134,23 @@ void deformSurface(vec2 rest, out vec3 P, out vec3 N, out float cw) {
 }
 `;
 
-const VERT_BEGIN = /* glsl */`
+const TEAR_GLSL = /* glsl */`
+uniform vec4 uTear;      // xy: unit normal of the tear line in REST space, z: offset (m), w: piece side (+1 / -1), 0 = no tear
+uniform vec2 uTearJag;   // x: jaggedness amplitude (m), y: frequency (1/m)
+varying vec2 vRest;
+float th2(vec2 p){ p = fract(p * vec2(.1031, .1030)); p += dot(p, p.yx + 33.33); return fract((p.x + p.y) * p.x); }
+float tn2(vec2 p){ vec2 i = floor(p), f = fract(p); f = f*f*(3.-2.*f); return mix(mix(th2(i), th2(i+vec2(1,0)), f.x), mix(th2(i+vec2(0,1)), th2(i+vec2(1,1)), f.x), f.y); }
+float tearField(vec2 r){ return dot(r, uTear.xy) - uTear.z + uTearJag.x * ((tn2(r * uTearJag.y) - 0.5) * 2.0 + 0.5 * (tn2(r * uTearJag.y * 4.1) - 0.5)); }
+`;
+
+export const VERT_BEGIN = /* glsl */`
 vec3 pP, pN; float pCW;
 deformSurface(position.xy, pP, pN, pCW);
 float pT = 0.5 * max(uThickness, uPixelSize * 1.2);       // half thickness, never thinner than ~1.2 px on screen
 vec3 objectNormal; vec3 deformed;
 if (aShell.x != 0.0) { deformed = pP + pN * (aShell.x * pT); objectNormal = pN * aShell.x; }
 else { float pc; vec3 o = deformPoint(position.xy + aShell.yz * uDeformEps, pc) - pP; o = normalize(o - pN * dot(o, pN)); deformed = pP + pN * (aShell.w * pT); objectNormal = o; }
-vWorldWad = pCW;
+vWorldWad = pCW; vRest = position.xy; vShell = aShell.x;
 #ifdef USE_TANGENT
   vec3 objectTangent = vec3( tangent.xyz );
 #endif
@@ -161,21 +166,34 @@ export function createPaperMaterial({ fibre, formation, macro, shared } = {}) {
   });
   fibre.repeat.set(A4.w / 0.03, A4.h / 0.03);   // NB: for RT textures set repeat on the texture too (works: texture.matrix is built from repeat)         // fibre tile = 30 mm
   formation.repeat.set(A4.w / 0.105, A4.h / 0.105);   // formation tile = 105 mm
-  mat.customProgramCacheKey = () => 'aviva-paper-v1' + (globalThis.__dbg||'');
+  mat.customProgramCacheKey = () => 'aviva-paper-v1';
   mat.onBeforeCompile = (shader) => {
     Object.assign(shader.uniforms, u, {
       uFormationMap: { value: formation }, uFormationRepeat: { value: formation.repeat }, uMacroMap: { value: macro }, uMacroRepeat: { value: new THREE.Vector2(A4.w / 0.0030, A4.h / 0.0030) },
-      uMacro: { value: 0 }, uFibreRepeat: { value: fibre.repeat }, uTrans: { value: 0.22 }, uTransTint: { value: new THREE.Color('#ffe9c8') },
+      uMacro: { value: 0 }, uPaint: { value: null }, uPaintOn: { value: 0 }, uFibreRepeat: { value: fibre.repeat }, uTrans: { value: 0.22 }, uTransTint: { value: new THREE.Color('#ffe9c8') },
     });
     mat.userData.shader = shader;
     shader.vertexShader = shader.vertexShader
-      .replace('#include <common>', '#include <common>\nattribute vec4 aShell;\nvarying float vWorldWad;\n' + (globalThis.__dbg ? '#define DBG'+globalThis.__dbg+'\n' : '') + DEFORM_GLSL)
+      .replace('#include <common>', '#include <common>\nattribute vec4 aShell;\nvarying float vWorldWad; varying vec2 vRest; varying float vShell;\n' + DEFORM_GLSL)
       .replace('#include <beginnormal_vertex>', VERT_BEGIN)
       .replace('#include <begin_vertex>', 'vec3 transformed = deformed;');
     shader.fragmentShader = shader.fragmentShader
       .replace('#include <common>', `#include <common>
-varying float vWorldWad;
+varying float vWorldWad; varying float vShell;
+uniform sampler2D uPaint; uniform float uPaintOn; uniform vec2 uSheet;
+${TEAR_GLSL}
 uniform sampler2D uFormationMap; uniform vec2 uFormationRepeat; uniform sampler2D uMacroMap; uniform vec2 uMacroRepeat; uniform float uMacro; uniform vec2 uFibreRepeat; uniform float uTrans; uniform vec3 uTransTint;`)
+      .replace('#include <clipping_planes_fragment>', `#include <clipping_planes_fragment>
+      float tearBand = 0.0;
+      if (uTear.w != 0.0) {
+        float d = tearField(vRest) * uTear.w;                              // >= 0 : this piece's side
+        float fuzz = (th2(vRest * 3100.0) - 0.5) * 0.0008;                // ragged, fibrous edge
+        if (d + fuzz < 0.0) discard;
+        tearBand = 1.0 - smoothstep(0.0, 0.0016, d);
+      }`)
+      .replace('#include <color_fragment>', `#include <color_fragment>
+      diffuseColor.rgb = mix(diffuseColor.rgb, vec3(1.0), tearBand * 0.55);   // torn edges show raw, brighter fibre
+      if (uPaintOn > 0.5 && vShell > 0.5) { vec4 pc = texture2D(uPaint, vRest / uSheet + 0.5); diffuseColor.rgb = mix(diffuseColor.rgb, pc.rgb, pc.a); }`)
       // macro fibre layer: extra normal detail, faded by screen-space footprint so it only shows when zoomed in (no shimmer at normal distance)
       .replace('#include <normal_fragment_maps>', `#include <normal_fragment_maps>
       {
@@ -217,9 +235,12 @@ export function createPaperDepthMaterial(shared) {
   m.onBeforeCompile = (shader) => {
     Object.assign(shader.uniforms, shared);
     shader.vertexShader = shader.vertexShader
-      .replace('#include <common>', '#include <common>\nattribute vec4 aShell;\nvarying float vWorldWad;\n' + DEFORM_GLSL)
+      .replace('#include <common>', '#include <common>\nattribute vec4 aShell;\nvarying float vWorldWad; varying vec2 vRest; varying float vShell;\n' + DEFORM_GLSL)
       .replace('#include <begin_vertex>', VERT_BEGIN.replace('vec3 objectNormal; vec3 deformed;', 'vec3 objectNormal; vec3 deformed;') + '\nvec3 transformed = deformed;')
       .replace('#include <beginnormal_vertex>', '');
+    shader.fragmentShader = shader.fragmentShader
+      .replace('#include <common>', '#include <common>\n' + TEAR_GLSL)
+      .replace('void main() {', 'void main() {\n  if (uTear.w != 0.0) { float d = tearField(vRest) * uTear.w; if (d + (th2(vRest * 3100.0) - 0.5) * 0.0008 < 0.0) discard; }');
   };
   m.customProgramCacheKey = () => 'aviva-paper-depth-v1';
   return m;
@@ -231,7 +252,7 @@ export function makeShared() {
   return {
     uSheet: { value: new THREE.Vector2(A4.w, A4.h) }, uThickness: { value: 0.0006 }, uPixelSize: { value: 0.0 }, uFoldCount: { value: 0 },
     uFoldQ: { value: arr4(MAX_FOLDS) }, uFoldA: { value: arr4(MAX_FOLDS) }, uFoldM: { value: arr4(MAX_FOLDS) }, uFoldR: { value: arr4(MAX_FOLDS) },
-    uBend: { value: new THREE.Vector4(0, 0, 0, 0) }, uFlutter: { value: new THREE.Vector4(0, 6, 1, 0) }, uCrumple: { value: 0 },
+    uBend: { value: new THREE.Vector4(0, 0, 0, 0) }, uPleat: { value: new THREE.Vector4(0.015, 0, 0, 0) }, uTear: { value: new THREE.Vector4(1, 0, 0, 0) }, uTearJag: { value: new THREE.Vector2(0.004, 90) }, uFlutter: { value: new THREE.Vector4(0, 6, 1, 0) }, uCrumple: { value: 0 },
     uFacet: { value: arr4(N_FACETS) }, uWadRadius: { value: 0.031 }, uCrease: { value: arr4(14) }, uDeformEps: { value: 0.0008 },
   };
 }
