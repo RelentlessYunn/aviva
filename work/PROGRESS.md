@@ -29,6 +29,7 @@ Branch: `claude/elegant-curie-dduigw` → PR into `main` (user merges).
 ## Log
 - 2026-10-01 — Phase 0 done. Placeholder `docs/index.html`; `docs/.nojekyll`; `work/reviews/`. Draft PR: https://github.com/RelentlessYunn/aviva/pull/1
 - 2026-10-01 — Pinned three 0.186.1 / gsap 3.15.0 / lenis 1.3.26 as devDependencies (exact). Phase 1 launched.
+- 2026-10-01 19:12 UTC — All three Phase 1 agents hit an API usage limit before writing anything; resumed after the reset with their context intact, and told to write their files incrementally.
 
 ## Running now
 - reference-analyst → `work/02-reference-teardown.md`
