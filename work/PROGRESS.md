@@ -30,11 +30,11 @@ Branch: `claude/elegant-curie-dduigw` → PR into `main` (user merges).
 - 2026-10-01 — Phase 0 done. Placeholder `docs/index.html`; `docs/.nojekyll`; `work/reviews/`. Draft PR: https://github.com/RelentlessYunn/aviva/pull/1
 - 2026-10-01 — Pinned three 0.186.1 / gsap 3.15.0 / lenis 1.3.26 as devDependencies (exact). Phase 1 launched.
 - 2026-10-01 19:12 UTC — All three Phase 1 agents hit an API usage limit before writing anything; resumed after the reset with their context intact, and told to write their files incrementally.
+- 2026-10-01 — Research A accepted (sourced, confidence-tagged). Teardown accepted (measured 63 vh scroll map, 54 signature elements, 48-item checklist). Collision decisions #7–#10 logged (no fold-to-encrypt, no blank-A4 weights, no power-draw card, no Pro Max/glowing pills). Concepts brief sent.
 
 ## Running now
-- reference-analyst → `work/02-reference-teardown.md`
-- web-researcher (A) → `work/01-research.md`
-- web-researcher (B) → `work/01b-tech-research.md`
+- web-researcher (B) → `work/01b-tech-research.md` (partly written)
+- creative-director → `work/03-concepts.md` (Phase 2 started early, in parallel with tech research)
 
 ## Next step
-- When all three land: read in full, send back if thin, commit; then Phase 2 (concepts).
+- Review tech research when it lands. Review 3 concepts, score on 5 criteria, choose, log in decisions.md. Then Phase 3 brief.

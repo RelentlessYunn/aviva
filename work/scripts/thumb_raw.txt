@@ -1,3 +1,4 @@
+# ORYZO frame scroll-thumb measurement. Columns: frame, video time (s), thumb height px, thumb top px (vp-y). Reliable only where height = 150/151; other rows were read visually from a right-edge montage (see work/02-reference-teardown.md section 2).
 01 0.0 0 710
 02 1.5 326 27
 03 3.0 150 3

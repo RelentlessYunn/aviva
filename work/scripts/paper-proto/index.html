@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>paper proto</title>
+<script type="importmap">{ "imports": { "three": "../vendor/three/three.module.js", "three/addons/": "../vendor/three/addons/" } }</script>
+<style>html,body{margin:0;background:#f1f1ef;overflow:hidden}canvas{display:block;width:100vw;height:100vh}</style>
+</head><body><canvas id="c"></canvas>
+<script type="module">
+import * as THREE from 'three';
+import { createPaper, setFolds, dartPlaneFolds, halvingFolds, fold2D, A4 } from './paper.js';
+import { makeStudioEnvironment } from './studio.js';
+
+globalThis.__dbg = new URLSearchParams(location.search).get('dbg') || ''; const q = new URLSearchParams(location.search), num = (k, d) => q.has(k) ? parseFloat(q.get(k)) : d;
+const canvas = document.getElementById('c');
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, powerPreference: 'high-performance' });
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2)); renderer.setSize(innerWidth, innerHeight, false);
+renderer.toneMapping = THREE.NeutralToneMapping; renderer.toneMappingExposure = num('exp', 1.0);
+renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFShadowMap;
+const scene = new THREE.Scene(); scene.background = new THREE.Color(q.get('bg') || '#eceae6');
+const cam = new THREE.PerspectiveCamera(30, innerWidth / innerHeight, 0.01, 20);
+const pmrem = new THREE.PMREMGenerator(renderer); const envRT = pmrem.fromScene(makeStudioEnvironment(), 0.02); scene.environment = envRT.texture; scene.environmentIntensity = num('env', 0.55);
+
+const key = new THREE.DirectionalLight('#fff6ea', num('key', 1.1)); key.position.set(-0.6, 1.4, 0.9); key.castShadow = true;
+key.shadow.mapSize.set(2048, 2048); key.shadow.camera.left = -0.3; key.shadow.camera.right = 0.3; key.shadow.camera.top = 0.3; key.shadow.camera.bottom = -0.3; key.shadow.camera.near = 0.2; key.shadow.camera.far = 3; key.shadow.bias = -0.0004; key.shadow.normalBias = 0.0008; key.shadow.radius = 4;
+scene.add(key);
+if (q.has('back')) { const bl = new THREE.DirectionalLight('#ffffff', num('back', 3)); bl.position.set(0.3, 0.6, -1.2); scene.add(bl); }
+
+const paper = createPaper({ renderer: q.has('cpu') ? null : renderer, segW: num('sw', 84), segH: num('sh', 119) });
+const { mesh, shared, material } = paper; scene.add(mesh);
+console.log('texture gen ms', paper.texMs.toFixed(0));
+const floor = new THREE.Mesh(new THREE.PlaneGeometry(4, 4), new THREE.MeshStandardMaterial({ color: '#eeece8', roughness: 1 })); floor.rotation.x = -Math.PI / 2; floor.position.y = -0.06; floor.receiveShadow = true; if (!q.has('nofloor')) scene.add(floor);
+
+// ---- pose from URL ----
+const pose = q.get('pose') || 'flat', t = num('t', 0);
+const ease = (x) => x * x * (3 - 2 * x);
+shared.uThickness.value = num('thick', 0.0006);
+let folds = [];
+if (pose === 'dart') { folds = dartPlaneFolds(); folds.forEach((f, i) => f.t = ease(Math.min(Math.max(t - i, 0), 1))); }
+if (pose === 'halve') { folds = halvingFolds(); folds.forEach((f, i) => f.t = ease(Math.min(Math.max(t - i, 0), 1))); }
+if (pose === 'curl') { folds = [fold2D({ p: [0.105 - 0.09 * t, 0.148], dir: [1, 0.6], side: [-1, 0.2], toward: 1, angle: Math.PI * 0.9, radius: 0.018 })]; /* curl one corner: hinge near the right edge */ folds[0] = fold2D({ p: [0.105 - 0.16 * t, 0], dir: [0.15, 1], side: [1, 0], toward: 1, angle: Math.PI * num('ang', 0.95), radius: num('rad', 0.02) }); }
+if (pose === 'bend') shared.uBend.value.set(num('k', 6), num('axis', 0), 0, 0);
+if (pose === 'crumple') { shared.uCrumple.value = t;  }
+if (pose === 'flutter') { shared.uBend.value.set(2, 0.3, 0.8, 0.012); shared.uFlutter.value.set(num('time', 1), 14, 1, 0); }
+setFolds(shared, folds);
+material.userData.macro = num('macro', 0); if (q.has('wire')) material.wireframe = true;
+
+// mesh placement
+mesh.rotation.set(THREE.MathUtils.degToRad(num('rx', -90)), THREE.MathUtils.degToRad(num('ry', 0)), THREE.MathUtils.degToRad(num('rz', 0)));
+mesh.position.set(num('px', 0), num('py', 0), num('pz', 0));
+cam.position.set(num('cx', 0), num('cy', 0.45), num('cz', 0.95)); cam.lookAt(num('lx', 0), num('ly', 0), num('lz', 0));
+cam.fov = num('fov', 30); cam.updateProjectionMatrix();
+function updatePixelSize() { const d = cam.position.distanceTo(mesh.position); shared.uPixelSize.value = 2 * d * Math.tan(THREE.MathUtils.degToRad(cam.fov / 2)) / (innerHeight * renderer.getPixelRatio()); }
+updatePixelSize();
+const draw = () => { if (material.userData.shader) material.userData.shader.uniforms.uMacro.value = num('macro', 0); renderer.render(scene, cam); };
+await renderer.compileAsync(scene, cam);
+draw(); draw();
+window.__ready = true; window.__info = { calls: renderer.info.render.calls, tris: renderer.info.render.triangles, geom: renderer.info.memory.geometries, tex: renderer.info.memory.textures };
+</script></body></html>
