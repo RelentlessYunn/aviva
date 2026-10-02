@@ -177,6 +177,8 @@ const SQUEEZE = +arg('squeeze', 2.5);          // extra compression along the cu
 const RELAX = +arg('relax', 0.12);             // share of steps at the end with no compression (spring-back, settle)
 const NOISE = +arg('noise', 0.00025);
 const MODE = arg('mode', 'contact');
+const SPH0 = +arg('sph0', 0.3);              // when the closing sphere starts (share of the run)
+const SPHEND = +arg('sphend', 1.02);          // final sphere radius / natural radius
 const R0 = Math.hypot(0.105, 0.1485) * 1.001;          // m, out-of-plane seed noise per step during the first 15 %
 // natural ball radius from the excluded volume of the collision particles (random close packing ~0.55)
 const R_NAT = Math.cbrt(N * RC ** 3 / 0.55);
@@ -230,8 +232,8 @@ for (let step = 0; step <= STEPS; step++) {
       // contact driver: two "hands" (a slab |x.a| <= h) squeeze along the current axis, and a sphere slowly closes in
       if (S.h0 === undefined) { let m = 0; for (let i = 0; i < N; i++) m = Math.max(m, Math.abs((P[i * 3] - cx) * S.ax[0] + (P[i * 3 + 1] - cy) * S.ax[1] + (P[i * 3 + 2] - cz) * S.ax[2])); S.h0 = m; }
       slab = { ax: S.ax, h: S.h0 * (1 - SQUEEZE * 0.1 * w), c: [cx, cy, cz] };
-      const pw = prog / (1 - RELAX);
-      Rsph = R0 + (R_NAT * 1.02 - R0) * (1 - Math.pow(1 - Math.min(1, pw), 1.6));
+      const pw = Math.max(0, (prog - SPH0) / (1 - RELAX - SPH0));
+      Rsph = R0 + (R_NAT * SPHEND - R0) * (1 - Math.pow(1 - Math.min(1, pw), 1.6));
     }
     if (prog < 0.15) {
       const amp = NOISE * (1 - prog / 0.15);
@@ -290,6 +292,16 @@ for (let step = 0; step <= STEPS; step++) {
       }
     }
   }
+  // final stretch sweeps so the sheet stays inextensible (paper does not rubber)
+  for (let it = 0; it < 4; it++) {
+    for (let q = 0; q < E; q++) {
+      const e = it % 2 ? E - 1 - q : q, a = eI[e * 2], b = eI[e * 2 + 1];
+      const dx = P[b * 3] - P[a * 3], dy = P[b * 3 + 1] - P[a * 3 + 1], dz = P[b * 3 + 2] - P[a * 3 + 2];
+      const d = Math.hypot(dx, dy, dz); if (d < 1e-12) continue;
+      const corr = 0.5 * (d - eL[e]) / d;
+      P[a * 3] += dx * corr; P[a * 3 + 1] += dy * corr; P[a * 3 + 2] += dz * corr; P[b * 3] -= dx * corr; P[b * 3 + 1] -= dy * corr; P[b * 3 + 2] -= dz * corr;
+    }
+  }
   // plasticity
   for (let h = 0; h < HN; h++) {
     const th = dihedral(hI[h * 4], hI[h * 4 + 1], hI[h * 4 + 2], hI[h * 4 + 3], false); if (isNaN(th)) continue;
@@ -303,7 +315,9 @@ for (let step = 0; step <= STEPS; step++) {
     let rr = 0; for (let i = 0; i < N; i++) rr += (X[i * 3] - cx) ** 2 + (X[i * 3 + 1] - cy) ** 2 + (X[i * 3 + 2] - cz) ** 2; rr = Math.sqrt(rr / N);
     let creased = 0; for (let h = 0; h < HN; h++) if (Math.abs(hTheta0[h]) > 0.5) creased++;
     maxStretch = Math.max(maxStretch, ms);
-    console.log(`step ${step}/${STEPS} prog ${prog.toFixed(2)} rms ${(rr * 1000).toFixed(1)}mm  maxStretch ${(ms * 100).toFixed(2)}%  pairs ${pairCount}  creased>0.5rad ${creased}  ${((Date.now() - t0) / 1000).toFixed(1)}s`);
+    { const st = []; for (let e = 0; e < E; e++) { const a = eI[e * 2], b = eI[e * 2 + 1]; st.push(Math.abs(Math.hypot(X[b * 3] - X[a * 3], X[b * 3 + 1] - X[a * 3 + 1], X[b * 3 + 2] - X[a * 3 + 2]) / eL[e] - 1)); }
+      st.sort((a, b) => a - b); globalThis.__p = `p50 ${(st[E >> 1] * 100).toFixed(2)}% p99 ${(st[Math.floor(E * 0.99)] * 100).toFixed(2)}% p999 ${(st[Math.floor(E * 0.999)] * 100).toFixed(2)}%`; }
+    console.log(`step ${step}/${STEPS} prog ${prog.toFixed(2)} rms ${(rr * 1000).toFixed(1)}mm  maxStretch ${(ms * 100).toFixed(2)}%  pairs ${pairCount}  creased>0.5rad ${creased}  ${globalThis.__p}  ${((Date.now() - t0) / 1000).toFixed(1)}s`);
   }
 }
 console.log(`sim done in ${((Date.now() - t0) / 1000).toFixed(1)} s`);

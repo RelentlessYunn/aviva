@@ -1,0 +1,102 @@
+/* aviva design tokens — PROVISIONAL v0 (names are the contract; values will be refined).
+   Owner: visual-designer. Spec: work/05-design-system.md.
+   USE ROLES IN COMPONENTS (--text, --text-muted, --ground, --color-rule, --color-focus, --accent,
+   --button-*): [data-ground="ink"] remaps them. Palette constants never change. */
+:root {
+  /* Palette constants */
+  --color-paper: #F7F5F0;          /* paper white: the sheet, white page ground */
+  --color-studio: #ECEBE7;         /* studio white: floor/backdrop, cooler + greyer than paper */
+  --color-graphite: #2A2926;       /* all type, wordmark, lines, icons */
+  --color-graphite-muted: #69675F; /* secondary text, labels */
+  --color-ink: #283090;            /* ink-blue: the one accent and the s07–s10 ground */
+  --color-ink-deep: #1B2066;       /* ink core / pressed states on ink */
+  --color-on-ink: #F7F5F0;         /* paper white on ink */
+  --color-on-ink-muted: #C9CCE8;   /* secondary text on ink */
+
+  /* Roles (remapped by [data-ground]) */
+  --ground: var(--color-paper);
+  --text: var(--color-graphite);
+  --text-muted: var(--color-graphite-muted);
+  --accent: var(--color-ink);
+  --color-rule: #D9D6CE;           /* decorative hairlines */
+  --color-rule-strong: #8F8C84;    /* UI boundaries (inputs, buttons) ≥ 3 : 1 */
+  --color-focus: var(--color-ink);
+  --button-bg: var(--color-graphite);
+  --button-fg: var(--color-paper);
+  --selection-bg: var(--color-ink);
+  --selection-fg: var(--color-on-ink);
+
+  /* Type */
+  --font-sans: "Hanken Grotesk", "Helvetica Neue", Arial, system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --fw-light: 300;
+  --fw-regular: 400;
+  --fw-medium: 500;
+
+  /* Type scale: fluid 390 → 1440 px */
+  --fs-display: clamp(4.125rem, -0.0304rem + 17.0476vw, 15.3125rem);
+  --fs-h1: clamp(2.125rem, 1.2429rem + 3.619vw, 4.5rem);
+  --fs-h2: clamp(1.875rem, 1.2714rem + 2.4762vw, 3.5rem);
+  --fs-h3: clamp(1.375rem, 1.1893rem + 0.7619vw, 1.875rem);
+  --fs-lead: clamp(1.125rem, 0.9857rem + 0.5714vw, 1.5rem);
+  --fs-body: clamp(1rem, 0.9768rem + 0.0952vw, 1.0625rem);
+  --fs-small: 0.875rem;
+  --fs-label: 0.75rem;
+  --fs-micro: 0.6875rem;
+  --lh-display: 0.84; --tracking-display: -0.045em;
+  --lh-h1: 1.04;      --tracking-h1: -0.03em;
+  --lh-h2: 1.06;      --tracking-h2: -0.025em;
+  --lh-h3: 1.18;      --tracking-h3: -0.012em;
+  --lh-lead: 1.42;    --tracking-lead: -0.006em;
+  --lh-body: 1.55;    --tracking-body: 0;
+  --lh-small: 1.5;    --tracking-small: 0.004em;
+  --lh-label: 1.25;   --tracking-label: 0.1em;
+  --lh-micro: 1.35;   --tracking-micro: 0.08em;
+
+  /* Layout */
+  --gutter: clamp(1.25rem, 0.5357rem + 2.9306vw, 2.5rem);
+  --content-max: 85rem;
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2.25rem;
+  --space-7: 3.5rem;
+  --space-8: 5.5rem;
+  --space-9: 8.5rem;
+
+  /* Shape */
+  --radius-0: 0;
+  --radius-1: 2px;
+  --hairline: 1px;
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-spring: linear(0, 0.18 7%, 0.6 18%, 0.92 30%, 1.03 40%, 1.04 47%, 1.01 62%, 0.995 75%, 1);
+  --dur-fast: 160ms;
+  --dur-base: 320ms;
+  --dur-slow: 720ms;
+
+  /* Elevation */
+  --z-canvas: 0;
+  --z-content: 10;
+  --z-nav: 100;
+  --z-overlay: 1000;
+}
+
+[data-ground="ink"] {
+  --ground: var(--color-ink);
+  --text: var(--color-on-ink);
+  --text-muted: var(--color-on-ink-muted);
+  --accent: var(--color-on-ink);
+  --color-rule: rgba(247, 245, 240, 0.28);
+  --color-rule-strong: rgba(247, 245, 240, 0.62);
+  --color-focus: var(--color-on-ink);
+  --button-bg: var(--color-on-ink);
+  --button-fg: var(--color-ink);
+  --selection-bg: var(--color-on-ink);
+  --selection-fg: var(--color-ink);
+  color: var(--text);
+}
