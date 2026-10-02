@@ -1,0 +1,170 @@
+#!/usr/bin/env python3
+"""Draw the aviva wordmark, logomark and lockup as SVG (docs/assets/logo/).
+
+    python work/scripts/design/build-logo.py <HankenGrotesk[wght].ttf> [--preview out.html]
+
+The wordmark is Hanken Grotesk at a variable weight between Light and Regular (WGHT below), re-spaced by hand
+(per-pair gaps measured between outlines, not side-bearings) and with one change to the drawing: the tittle of
+the i is a portrait 1 : sqrt(2) rectangle, exactly as wide as the stem. The dot on the i is a sheet of A4.
+Each letter is its own <path> with an id (wm-a1, wm-v1, wm-i, wm-i-dot, wm-v2, wm-a2) so the floor decal and
+any animation can address letters. Units: font units (1000 per em), y up converted to SVG y down.
+"""
+import json
+import math
+import os
+import sys
+
+from fontTools.ttLib import TTFont
+from fontTools.varLib import instancer
+from fontTools.pens.svgPathPen import SVGPathPen
+from fontTools.pens.boundsPen import BoundsPen
+from fontTools.pens.transformPen import TransformPen
+
+ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', '..'))
+OUT = os.environ.get('LOGO_OUT', os.path.join(ROOT, 'docs', 'assets', 'logo'))
+
+WGHT = int(os.environ.get('LOGO_WGHT', 340))           # between Light (300) and Regular (400): calm at 4 m wide on the floor, still firm at 16 px
+# Gaps between letter outlines, in font units, measured at the x-height band (hand-tuned by eye).
+GAPS = {('a', 'v'): 52, ('v', 'i'): 64, ('i', 'v'): 64, ('v', 'a'): 40}
+if os.environ.get('LOGO_GAPS'):
+    _g = json.loads(os.environ['LOGO_GAPS']); GAPS = {('a', 'v'): _g[0], ('v', 'i'): _g[1], ('i', 'v'): _g[2], ('v', 'a'): _g[3]}
+SQRT2 = math.sqrt(2)
+GRAPHITE = '#2A2926'
+
+
+def glyph_path(gs, name, dx):
+    """SVG path for a glyph, translated by dx and flipped so y grows downwards from the baseline."""
+    pen = SVGPathPen(gs, ntos=lambda v: ('%.2f' % v).rstrip('0').rstrip('.'))
+    gs[name].draw(TransformPen(pen, (1, 0, 0, -1, dx, 0)))
+    return pen.getCommands()
+
+
+def bounds(gs, name):
+    bp = BoundsPen(gs)
+    gs[name].draw(bp)
+    return bp.bounds  # xMin, yMin, xMax, yMax (y up)
+
+
+def layout(font_path):
+    f = instancer.instantiateVariableFont(TTFont(font_path), {'wght': WGHT})
+    gs = f.getGlyphSet()
+    seq = [('a', 'a'), ('v', 'v'), ('i', 'dotlessi'), ('v', 'v'), ('a', 'a')]
+    ids = ['wm-a1', 'wm-v1', 'wm-i', 'wm-v2', 'wm-a2']
+    x = 0.0
+    letters = []
+    prev = None
+    for (key, gname), gid in zip(seq, ids):
+        xmin, ymin, xmax, ymax = bounds(gs, gname)
+        if prev is None:
+            dx = -xmin                       # first outline starts at x = 0
+        else:
+            dx = prev['right'] + GAPS[(prev['key'], key)] - xmin
+        letters.append({'id': gid, 'key': key, 'glyph': gname, 'dx': dx, 'left': dx + xmin, 'right': dx + xmax,
+                        'top': ymax, 'bottom': ymin, 'd': glyph_path(gs, gname, dx)})
+        prev = letters[-1]
+    stem = letters[2]
+    stem_w = stem['right'] - stem['left']
+    dot_w = stem_w
+    dot_h = dot_w * SQRT2
+    cap = f['OS/2'].sCapHeight              # 697: the tittle tops out at cap height, as the original dot does
+    dot = {'id': 'wm-i-dot', 'x': stem['left'], 'y': -cap, 'w': dot_w, 'h': dot_h}
+    width = letters[-1]['right']
+    xh = f['OS/2'].sxHeight
+    return {'letters': letters, 'dot': dot, 'width': width, 'cap': cap, 'xheight': xh,
+            'descent': min(l['bottom'] for l in letters)}
+
+
+def r(v):
+    return ('%.2f' % v).rstrip('0').rstrip('.')
+
+
+def wordmark_paths(L, fill='currentColor'):
+    out = []
+    for l in L['letters']:
+        out.append(f'<path id="{l["id"]}" d="{l["d"]}"/>')
+    d = L['dot']
+    out.insert(3, f'<rect id="{d["id"]}" x="{r(d["x"])}" y="{r(d["y"])}" width="{r(d["w"])}" height="{r(d["h"])}"/>')
+    return f'<g fill="{fill}">' + ''.join(out) + '</g>'
+
+
+def svg_doc(view, body, title, extra=''):
+    return (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="{view}" role="img" aria-label="{title}"{extra}>'
+            f'<title>{title}</title>{body}</svg>\n')
+
+
+def crop_marks(x, y, w, h, gap, arm, stroke, color='currentColor'):
+    """Printer's crop marks for the trim box (x, y, w, h): two arms per corner, outside the box, not touching."""
+    lines = []
+    for cx, sx in ((x, -1), (x + w, 1)):
+        for cy, sy in ((y, -1), (y + h, 1)):
+            # horizontal arm, on the trim line y = cy, running away from the box
+            lines.append((cx + sx * gap, cy, cx + sx * (gap + arm), cy))
+            # vertical arm, on the trim line x = cx
+            lines.append((cx, cy + sy * gap, cx, cy + sy * (gap + arm)))
+    p = ' '.join(f'M{r(a)} {r(b)}H{r(c)}' if b == d else f'M{r(a)} {r(b)}V{r(d)}' for a, b, c, d in lines)
+    return f'<path d="{p}" fill="none" stroke="{color}" stroke-width="{r(stroke)}" stroke-linecap="butt"/>'
+
+
+def logomark(size=24, stroke=1.5, color='currentColor'):
+    """The logomark on a square grid: an empty 1 : sqrt(2) trim box marked by four crop marks."""
+    h = size * 0.5                          # trim box height
+    w = h / SQRT2
+    gap = size * 0.0833                     # 2 px on 24
+    arm = (size - h) / 2 - gap - stroke / 2 # arms run to the edge of the grid
+    x = (size - w) / 2
+    y = (size - h) / 2
+    return crop_marks(x, y, w, h, gap, arm, stroke, color), (x, y, w, h)
+
+
+def main():
+    font_path = sys.argv[1]
+    os.makedirs(OUT, exist_ok=True)
+    L = layout(font_path)
+    W = L['width']
+    asc = L['cap']
+    desc = -L['descent']
+    # 1. wordmark: tight box, baseline at y = 0 inside the viewBox
+    pad = 0
+    view = f'{r(-pad)} {r(-asc - pad)} {r(W + 2 * pad)} {r(asc + desc + 2 * pad)}'
+    with open(os.path.join(OUT, 'wordmark.svg'), 'w') as fh:
+        fh.write(svg_doc(view, wordmark_paths(L), 'aviva'))
+    # 2. floor wordmark: graphite, generous padding so mip-mapped blur never clips (see 05 §6)
+    fpad = W * 0.04
+    fview_h = asc + desc + 2 * fpad
+    fview = f'{r(-fpad)} {r(-asc - fpad)} {r(W + 2 * fpad)} {r(fview_h)}'
+    with open(os.path.join(OUT, 'wordmark-floor.svg'), 'w') as fh:
+        fh.write(svg_doc(fview, wordmark_paths(L, GRAPHITE), 'aviva (floor decal)'))
+    # 3. logomark, 24 grid (scales cleanly; favicon has its own optical size)
+    mark, box = logomark(24, 1.5)
+    with open(os.path.join(OUT, 'logomark.svg'), 'w') as fh:
+        fh.write(svg_doc('0 0 24 24', mark, 'aviva logomark: crop marks around an empty A4'))
+    # 4. lockup: mark left of wordmark. The mark's trim box is as tall as the x-height + ascender band
+    #    (cap height), its centre on the x-height midline; gap = one stem.
+    s = asc / 12.0                          # mark drawn on a 24 grid scaled so its 12-unit trim box = cap height
+    mark_size = 24 * s
+    gap = 0.42 * mark_size
+    mark_svg, _ = logomark(24, 1.5)
+    tx = 0
+    ty = -asc / 2 - mark_size / 2          # centre of mark on the cap-height midline
+    word_x = mark_size + gap - 4 * s       # crop-mark arms read as the mark's edge, so tuck the word in a little
+    body = (f'<g transform="translate({r(tx)} {r(ty)}) scale({r(s)})">{mark_svg}</g>'
+            f'<g transform="translate({r(word_x)} 0)">{wordmark_paths(L)}</g>')
+    lw = word_x + W
+    top = min(ty, -asc)
+    bot = max(ty + mark_size, desc)
+    with open(os.path.join(OUT, 'lockup.svg'), 'w') as fh:
+        fh.write(svg_doc(f'0 {r(top)} {r(lw)} {r(bot - top)}', body, 'aviva'))
+    meta = {
+        'weight': WGHT, 'gaps': {f'{a}{b}': v for (a, b), v in GAPS.items()}, 'units_per_em': 1000,
+        'width': round(W, 1), 'cap_height': asc, 'x_height': L['xheight'], 'descent': round(desc, 1),
+        'letters': [{k: (round(v, 1) if isinstance(v, float) else v) for k, v in l.items() if k in ('id', 'left', 'right')} for l in L['letters']],
+        'i_dot': {k: round(v, 1) if isinstance(v, float) else v for k, v in L['dot'].items()},
+        'floor_viewbox': fview,
+    }
+    with open(os.path.join(OUT, 'wordmark-metrics.json'), 'w') as fh:
+        json.dump(meta, fh, indent=1)
+    print(json.dumps(meta, indent=1))
+
+
+if __name__ == '__main__':
+    main()
