@@ -34,10 +34,10 @@ Branch: `claude/elegant-curie-dduigw` → PR into `main` (user merges).
 - 2026-10-01 — Tech research accepted, with a working prototype in `work/scripts/paper-proto/` (folds, dart plane, halving, tear, crumple, pencil, ink front, picking, contact shadow) and a tested import map + `work/scripts/copy-vendor.sh`. Look-dev targets logged (#12). **Phase 1 complete.**
 - 2026-10-02 07:10 UTC — Creative-director hit a usage limit after writing Concept A; partial file committed; agent resumed for B, C and the comparison.
 - 2026-10-02 — Concepts A/B/C in `work/03-concepts.md`. Lead scores A 43.5 · C 41.5 · B 39.5. **Chosen: Concept A "Void of All Characters" (aviva A4, "Pre-trained on nothing.")** with 5 enrichments (decisions #14). **Phase 2 complete.**
+- 2026-10-02 — Research §13 added: ISO 216 A0–A10 table, derived numbers re-checked (all correct), EU rate → use 75.1 % (2024) not 79.3 %, Dias & Arroja 2012 carbon, Guinness paper rules (≤ A4, ≤ 100 g/m²), Locke verbatim (1689/1690), Rauschenberg 'about a month' (his words), pencil/eraser facts. Corrections forwarded to the creative-director.
 
 ## Running now
 - creative-director → `work/04-creative-brief.md` (Phase 3)
-- web-researcher → fill fact gaps in `work/01-research.md` §13 (ISO 216 table, derived checks, EU 79.3 %, carbon, record rules, Locke, pencil facts)
 - visual-designer (task 1 of 2) → paper module `docs/js/paper/`, lab `docs/lab/paper.html`, vendor via copy script; started early because the paper needs the most iteration. Task 2 (design system + 2D assets) after the brief.
 
 ## Next step
