@@ -17,3 +17,26 @@ One line per decision: what, and why.
 | 11 | 2026-10-01 | Accept `work/01b-tech-research.md` and its prototype (`work/scripts/paper-proto/`) as the technical baseline: one `MeshPhysicalMaterial` patched via `onBeforeCompile`, one `deformPoint()` GLSL chain (hinge-with-radius folds, bend, pleat, crumple), forward-difference normals, cheap backlit translucency (not `transmission`), contact shadow + PCF, NeutralToneMapping, MSAA without a composer, GPU pencil brush into a render target, closed-form ink-front shader, Lenis+ScrollTrigger in one gsap ticker with a reset-then-claim state object, esbuild-minified vendor copy. | Every key effect was proven live in three 0.186.1; the import map and copy script are tested under a sub-path. |
 | 12 | 2026-10-01 | Look-dev targets set by the lead after viewing the prototype renders: (a) crumple must not read as cauliflower/foam: plan for a small baked crumple (Node cloth sim → morph targets, ≤ 200 KB) unless the procedural wad passes my visual check; (b) the contact shadow must be soft and light, never a hard offset slab; (c) the sheet must show a light gradient across it, visible tooth/fibre at mid-distance, and a crisp bright edge. | The prototype renders prove the mechanics but still look CG; the paper is the hero, so these are the bar for Phase 3. |
 | 13 | 2026-10-01 | GSAP is credited as "GreenSock Standard No-Charge License" (not MIT); keep its `@license` headers; ship `docs/vendor/gsap/LICENSE.txt`. | Licence terms verified by the researcher; a free public parody site is a Permitted Use. |
+| 14 | 2026-10-02 | **Concept A, "Void of All Characters", is chosen** (model **aviva A4**, tagline "Pre-trained on nothing."), with the enrichments in "Phase 2: concept choice" below. | Highest lead score (43.5/50): best 5-second hook, purest KEEP of ORYZO's premium-hype register, every interaction paper-only, and the build budget goes into one perfect sheet. |
+
+## Phase 2: concept choice (2026-10-02)
+
+Lead's own scores (1–10), made independently after reading all three concepts in full:
+
+| Criterion | A: Void of All Characters | B: It Can Be Anything | C: Too Dangerous to Release |
+|---|---|---|---|
+| Technique fidelity (ORYZO's format, pacing, premium-hype tone) | 9 | 8.5 | 7.5 (moves the register from hype to dread; KEEP says hype + Apple launch) |
+| Distinctiveness from ORYZO | 8 | 7.5 (plane through fit-width type + a growing stack in the tiers both sit near #29/#47) | 9.5 |
+| Originality and wit | 8.5 | 8.5 | 9 |
+| Fit with paper | 9.5 | 9 | 8.5 |
+| Buildability in real-time Three.js | 8.5 | 6 (3 hand meshes, Miura, Moon, throw physics, 12 pins) | 7 (6-wedge breach, shred mesh, crumple at rest) |
+| **Total** | **43.5** | **39.5** | **41.5** |
+
+**Why A.** "Every great product starts with a blank sheet of paper. Ours stopped there." lands in five seconds for someone who has never seen ORYZO. "Answer: see above.", "Distil it" (A4 → 2 × A5 → 4 × A6, then "Below A6, it's confetti."), The Bleed and "Fine-tuned on you." are all built on properties only this sheet has. C is the wittiest on paper, but its dread register drifts from the hype/Apple tone the user asked us to keep, and it risks reading as a jab at safety work. B is the most spectacular, but it costs the most and its fly-through and stack both sit close to ORYZO.
+
+**Enrichments the brief must include** (lead's calls, to fix A's two named risks: "nothing wears thin" and "seven blank sheets could be a lazy gallery"):
+1. **"Selected outputs" mixes blank and folded outputs.** Most outputs stay blank (the core joke), but a few prompts get a literal folded answer from the same sheet. Examples: "Book me a flight." → a dart plane; "Something about the sea." → a boat; "Cool me down." → a pleated fan. Each card gets its own light setup. This covers the mission's "so foldable, it flies" origami idea without becoming an origami showcase. No hat (it would be a "wearable" echo).
+2. **Borrow a few lines from B and C, as claim cards or micro-copy only:** "Refusal rate: 0.0 %." · "Alignment: left, centre, right or justified." · "Our roadmap reaches the Moon. Our sheet reaches 6.4 mm." (only if the fact-check passes it) · "The only demo that can't crash. It can only crease." (hover or delight).
+3. **Keep ORYZO's KEEP rhythm order** where A deviates: macro → sustainability-type beat → testimonials → claim gallery → tiers. "It comes back" moves before the testimonials (it can sit on the ink-blue ground after The Bleed). Any other deviation must be justified in the brief.
+4. **The pencil appears at least twice**: the AI beat, and the ending, where the visitor's drawing returns. Keyboard and touch alternatives are required ("type a line" draws a pre-baked stroke).
+5. **The hero show-through is a must-have**: the wordmark visible through the sheet. The brief should describe it so the visual-designer can fake it in the shader.

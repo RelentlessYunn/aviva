@@ -20,7 +20,7 @@ Branch: `claude/elegant-curie-dduigw` → PR into `main` (user merges).
 ## Phase checklist
 - [x] **Phase 0 — Setup**: mission saved, folders, npm install, shoot tool verified, network checked, ORYZO-1 repo cloned, commit + push, draft PR (#1).
 - [x] **Phase 1 — Discovery**: reference teardown (reference-analyst), paper + parody research (web-researcher A), tech research (web-researcher B). Lead reviews all three.
-- [ ] **Phase 2 — Concepts**: 3 concepts (creative-director), lead scores + chooses.
+- [x] **Phase 2 — Concepts**: 3 concepts (creative-director), lead scores + chooses.
 - [ ] **Phase 3 — Brief, look-dev, skeleton**: creative brief; then in parallel design system + paper look-dev, technical skeleton, fact-check. Lead iterates paper look until it's clearly real.
 - [ ] **Phase 4 — Build**: sections in chunks, screenshots between chunks.
 - [ ] **Phase 5 — Review loops** (3–6 rounds): fidelity + similarity, creative, visual → fix list → fixes.
@@ -33,9 +33,11 @@ Branch: `claude/elegant-curie-dduigw` → PR into `main` (user merges).
 - 2026-10-01 — Research A accepted (sourced, confidence-tagged). Teardown accepted (measured 63 vh scroll map, 54 signature elements, 48-item checklist). Collision decisions #7–#10 logged (no fold-to-encrypt, no blank-A4 weights, no power-draw card, no Pro Max/glowing pills). Concepts brief sent.
 - 2026-10-01 — Tech research accepted, with a working prototype in `work/scripts/paper-proto/` (folds, dart plane, halving, tear, crumple, pencil, ink front, picking, contact shadow) and a tested import map + `work/scripts/copy-vendor.sh`. Look-dev targets logged (#12). **Phase 1 complete.**
 - 2026-10-02 07:10 UTC — Creative-director hit a usage limit after writing Concept A; partial file committed; agent resumed for B, C and the comparison.
+- 2026-10-02 — Concepts A/B/C in `work/03-concepts.md`. Lead scores A 43.5 · C 41.5 · B 39.5. **Chosen: Concept A "Void of All Characters" (aviva A4, "Pre-trained on nothing.")** with 5 enrichments (decisions #14). **Phase 2 complete.**
 
 ## Running now
-- creative-director → `work/03-concepts.md` (Phase 2 started early, in parallel with tech research)
+- creative-director → `work/04-creative-brief.md` (Phase 3)
+- web-researcher → fill fact gaps in `work/01-research.md` (ISO 216 table, 98.43 m paper rules, EU 79.3 % check, carbon per sheet)
 
 ## Next step
-- Review 3 concepts, score on 5 criteria, choose, log in decisions.md. Then Phase 3 brief.
+- When the brief lands: launch visual-designer (design system + paper look-dev), web-developer (skeleton), web-researcher (brief fact-check) in parallel.
