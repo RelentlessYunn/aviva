@@ -2,8 +2,9 @@
 //
 //   makeFibreTile(renderer)    30 mm tile, RGBA8: RG = tangent-space normal (packed), B = height, A = fibre mask
 //                              "tooth": felt + short fibre streaks. The detail you see at 5 cm to 1 m.
-//   makeMacroTile(renderer)    3 mm tile, RGBA8: RG normal, B height (cavity / AO), A per-fibre brightness
-//                              individual cellulose fibres (ribbons 15-40 um wide), for the camera at 1-3 cm.
+//   makeMacroTile(renderer)    6 mm tile, RGBA8: RG normal, B height (cavity / AO), A per-fibre brightness
+//                              individual cellulose fibres (ribbons 20-50 um wide), for the camera at 1-3 cm.
+//   makeFibreGeoTile(renderer) the same fibres as geometry (centre offset, angle, half length): the ink front wicks along them.
 //   makeFormationMap(renderer) one map for the whole sheet (periodic, so per-sheet variants can offset it), RGBA8:
 //                              R = formation (the cloudy flocs you see against the light), G = roughness multiplier,
 //                              B = optical thickness for transmission, A = fine "fill" noise.
@@ -144,51 +145,83 @@ export function makeFibreTile(renderer, { size = 1024, tileMM = 30, seed = 3, st
   return out.texture;
 }
 
-/* ---------- 3 mm macro tile: cellulose fibres as stacked, twisted ribbons ---------- */
+/* ---------- macro tile: cellulose fibres as stacked, twisted, collapsed ribbons (6 mm tile) ----------
+ * One fibre loop, two outputs (define GEO):
+ *   height pass:   RG = 16-bit height, B = per-fibre brightness, A = fibre mask
+ *   geometry pass: the TOP fibre at each texel: RG = its centre offset from the texel (mm, +-uMaxOff), B = angle / pi,
+ *                  A = half length / uMaxHalf. The ink front (glsl.js INK_FRONT) wicks along exactly these fibres.
+ */
 const MACRO_FRAG = /* glsl */`
 precision highp float; varying vec2 vUv;
-uniform float uTileMM, uSeed, uGrain;
+uniform float uTileMM, uSeed, uGrain, uCellMM, uMaxOff, uMaxHalf;
 ${NOISE_GLSL}
+#define FIB 4
 void main(){
-  float cellMM = 0.3, cells = floor(uTileMM / cellMM + 0.5);
+  float cells = floor(uTileMM / uCellMM + 0.5), cmm = uTileMM / cells;
   vec2 p = vUv * cells, ip = floor(p);
-  // fines and filler: a low "felt" floor under the fibres
-  float base = 0.18 + 0.06 * pnoise(vUv * 40.0, vec2(40.0), uSeed + 3.0) + 0.04 * pnoise(vUv * 160.0, vec2(160.0), uSeed + 5.0);
-  float h = base, top = -1.0, bright = 0.5;
+  // fines and filler: a low felt under the fibres, with a few round filler grains
+  float base = 0.16 + 0.05 * pnoise(vUv * 60.0, vec2(60.0), uSeed + 3.0) + 0.03 * pnoise(vUv * 240.0, vec2(240.0), uSeed + 5.0);
+  vec2 fp = vUv * cells * 6.0; vec2 fi = floor(fp); vec2 fo = hash22(mod(fi, cells * 6.0) + uSeed) ; float fr = length(fract(fp) - fo);
+  base += 0.05 * smoothstep(0.16, 0.0, fr) * step(0.7, hash12(mod(fi, cells * 6.0) + 9.0));
+  float h = base, bright = 0.5, mask = 0.0;
+  vec4 geo = vec4(0.5, 0.5, 0.0, 0.0);
   for (int j = -3; j <= 3; j++) for (int i = -3; i <= 3; i++) {
     vec2 cell = ip + vec2(float(i), float(j)), wc = mod(cell, cells);
-    for (int k = 0; k < 3; k++) {
+    for (int k = 0; k < FIB; k++) {
       vec4 r = hash42(wc * 3.0 + float(k) * 7.31 + uSeed);
       vec4 s = hash42(wc * 5.0 + float(k) * 3.17 + uSeed + 11.0);
       vec2 c = cell + r.xy;
-      float ang = (s.x < uGrain ? 0.0 : s.y * 3.14159) + (s.z - 0.5) * 0.6;
+      float ang = (s.x < uGrain ? 0.0 : s.y * 3.14159) + (s.z - 0.5) * 0.7;
       vec2 d = vec2(cos(ang), sin(ang)), n = vec2(-d.y, d.x);
-      float len = mix(0.9, 2.9, r.z * r.z);                  // half length in cells (0.27 - 0.87 mm)
+      float len = mix(1.1, 3.0, r.z * r.z);                   // half length in cells
       vec2 q = p - c; float t = dot(q, d);
       if (abs(t) > len) continue;
-      float bend = (s.w - 0.5) * 0.35;
+      float bend = (s.w - 0.5) * 0.4;
       float w = dot(q, n) - bend * (t * t - len * len) / len;
-      float halfW = (0.05 + 0.06 * r.w) * (0.55 + 0.45 * abs(cos(t * (1.2 + 2.0 * s.z) + r.x * 6.0)));   // ribbon twists: 15-35 um
+      float twist = abs(cos(t * (1.0 + 1.8 * s.z) + r.x * 6.0));
+      float halfW = (0.035 + 0.05 * r.w) * (0.45 + 0.55 * twist) * (0.3 / cmm);   // 10-26 um half width
       float a = abs(w) / halfW; if (a > 1.0) continue;
-      float tipFade = smoothstep(len, len * 0.8, abs(t));
-      float layer = hash12(wc * 13.0 + float(k)) * 0.6 + 0.25;                  // stacking depth
-      float prof = sqrt(max(1.0 - a * a, 0.0)) * (1.0 - 0.18 * exp(-a * a * 9.0)) * tipFade;  // flattened tube with a collapsed lumen
-      float hh = layer + 0.22 * prof;
-      if (hh > h) { h = hh; top = layer; bright = 0.35 + 0.65 * hash12(wc * 7.0 + float(k) * 1.3); }
+      float tipFade = smoothstep(len, len * 0.82, abs(t));
+      float layer = hash12(wc * 13.0 + float(k)) * 0.62 + 0.24;
+      // flattened tube with a collapsed lumen (a groove down the middle), fine fibrils along the length
+      float prof = sqrt(max(1.0 - a * a, 0.0)) * (1.0 - 0.32 * exp(-a * a * 10.0) * twist) * tipFade;
+      prof *= 1.0 + 0.06 * sin(w / halfW * 9.0 + t * 0.7);
+      float hh = layer + 0.2 * prof;
+      if (hh > h) {
+        h = hh; bright = 0.35 + 0.65 * hash12(wc * 7.0 + float(k) * 1.3); mask = tipFade;
+        vec2 off = (c - p) * cmm;                              // fibre centre relative to this texel (mm)
+        geo = vec4(clamp(off / uMaxOff, -1.0, 1.0) * 0.5 + 0.5, fract(ang / 3.14159265), clamp(len * cmm / uMaxHalf, 0.0, 1.0));
+      }
     }
   }
-  gl_FragColor = vec4(encode16(clamp(h, 0.0, 1.0)), bright, 1.0);
+#ifdef GEO
+  gl_FragColor = mask > 0.05 ? geo : vec4(0.5, 0.5, 0.0, 0.0);
+#else
+  gl_FragColor = vec4(encode16(clamp(h, 0.0, 1.0)), bright, mask);
+#endif
 }`;
 
-export function makeMacroTile(renderer, { size = 1024, tileMM = 3, seed = 9, strength = 9, grain = 0.35 } = {}) {
+/** 6 mm macro tile: RG normal, B height, A per-fibre brightness. */
+export function makeMacroTile(renderer, { size = 1024, tileMM = 6, seed = 9, strength = 7, grain = 0.4, cellMM = 0.25 } = {}) {
   const h = rt(size, size, { mip: false });
   const m = new THREE.ShaderMaterial({ vertexShader: VERT, fragmentShader: MACRO_FRAG, depthTest: false, depthWrite: false,
-    uniforms: { uTileMM: { value: tileMM }, uSeed: { value: seed }, uGrain: { value: grain } } });
+    uniforms: { uTileMM: { value: tileMM }, uSeed: { value: seed }, uGrain: { value: grain }, uCellMM: { value: cellMM }, uMaxOff: { value: 1.0 }, uMaxHalf: { value: 1.0 } } });
   gpuPass(renderer, m, h); m.dispose();
   const out = heightToNormal(renderer, h, size, strength * size / 1024);
   h.dispose();
   out.texture.name = 'paper.macroTile';
   out.texture.userData.tileMM = tileMM;
+  return out.texture;
+}
+
+/** The fibre-geometry map of the same macro tile (same seed / params!). NEAREST, no mips. */
+export function makeFibreGeoTile(renderer, { size = 1024, tileMM = 6, seed = 9, grain = 0.4, cellMM = 0.25, maxOff = 1.0, maxHalf = 1.0 } = {}) {
+  const out = rt(size, size, { mip: false, filter: THREE.NearestFilter });
+  const m = new THREE.ShaderMaterial({ vertexShader: VERT, fragmentShader: MACRO_FRAG, depthTest: false, depthWrite: false, defines: { GEO: '' },
+    uniforms: { uTileMM: { value: tileMM }, uSeed: { value: seed }, uGrain: { value: grain }, uCellMM: { value: cellMM }, uMaxOff: { value: maxOff }, uMaxHalf: { value: maxHalf } } });
+  gpuPass(renderer, m, out); m.dispose();
+  out.texture.name = 'paper.fibreGeo';
+  out.texture.userData = { tileMM, maxOff, maxHalf };
   return out.texture;
 }
 

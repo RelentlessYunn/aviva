@@ -17,7 +17,7 @@ Contents: 1 Brand · 2 Section plan · 3 Final copy · 4 The research paper · 5
 | **Model name** | **aviva A4.** The version number is the paper size. The family is the A-series: **aviva A5** (distilled), **aviva A6** (distilled again), **aviva A3** (twice the context window). A0 appears only in the paper and the specs. |
 | **Tagline** | **Pre-trained on nothing.** |
 | **Positioning line** | A foundation model with nothing on it. |
-| **The one-sentence story** | John Locke described the newborn mind as "white paper, void of all characters" (*An Essay Concerning Human Understanding*, 1689/1690; R§13.6: high for the wording, med for the year). We built it, launched it like a frontier model, and let the visitor supply the only training data it will ever get. |
+| **The one-sentence story** | John Locke described the newborn mind as "white paper, void of all characters" (*An Essay Concerning Human Understanding*, published December 1689 with 1690 on the title page; R§13.6 · R§13.10 #15: high for both the wording and the year). We built it, launched it like a frontier model, and let the visitor supply the only training data it will ever get. |
 
 ### Personality
 Calm, exact, reverent, unhurried. The voice is a keynote narrator who sincerely believes blankness is the ultimate feature and has the measurements to prove it. It is quietly certain and a little smug, the way a perfectly made object is. It never jokes about itself, never apologises and never explains the joke.
@@ -244,7 +244,7 @@ Reduced motion: the rotation stays (it's scroll-driven), with no push-in and no 
 | `s03.cta` | Pick up the pencil. | under the body |
 | `s03.hint.pointer` | DRAW ON THE SHEET | appears beside the sheet when a fine pointer hovers it |
 | `s03.pencil.tip` | HB. Graphite, not lead. | tooltip on the pencil cursor, first hover only (R§13.8 med-high) |
-| `s03.note` | Pencil sits on the fibres, so it erases. Ink soaks into them, so it doesn't. | small, under the buttons (R§13.8 high, "largely" true; it sets up s07 and the s11 "Ink is forever" card) |
+| `s03.note` | Pencil mostly sits on the fibres, so it mostly erases. Ink soaks in, so it doesn't. | small, under the buttons (R§13.8 high, "largely" true; it sets up s07 and the s11 "Ink is forever" card) |
 
 **Status line** `s03.status.*`: one line under the sheet, `aria-live="polite"`. It shows one message at a time, in this order:
 
@@ -287,7 +287,7 @@ Reduced motion: no corner curl; Regenerate swaps the sheet with a 300 ms fade in
 | `s04.eyebrow` | OPEN WEIGHTS | |
 | `s04.h2` | We weighed the weights. | |
 | `s04.body` | 80 g/m² × 0.06237 m² = 4.99 g. Our weights are open, and you can hold them in one hand. | R§1.2 high · R§13.1 derived |
-| `s04.note` | Strictly speaking, we calculated them. Real sheets vary by about ±2.5 %. | small. R§13.1 (calculated, not weighed) · R§1.4 med (±2.5 % basis-weight tolerance). This is a precision correction, not an asterisk gag |
+| `s04.note` | Strictly speaking, we calculated them. Real sheets vary by a few per cent. | small. R§13.1 (calculated, not weighed) · R§13.10 #10 med (datasheets quote ±3 g/m² or ±4 %). This is a precision correction, not an asterisk gag |
 | `s04.g.h3` | Selected outputs. | the gallery title, top-left above the drying line |
 | `s04.g.sub` | Unretouched. Each one exactly as aviva produced it. | |
 | `s04.label.prompt` | PROMPT | the label above each prompt |
@@ -298,7 +298,7 @@ Reduced motion: no corner curl; Regenerate swaps the sheet with a 300 ms fade in
 | # | `.p` (prompt) | `.o` (output) | `.alt` |
 |---|---|---|---|
 | 1 | Write a haiku about silence. | Shown. Seventeen syllables, all silent. | A blank sheet hanging from a clip, glowing softly with light from behind. |
-| 2 | Book me a flight. | Shown. Window seat. · `s04.c2.meta`: Eligible for both paper-aircraft world records. Entered neither. (R§13.5 med-high: Guinness allows paper up to A4 and 100 g/m²) | The sheet folded into a paper plane, hanging by its tail from a clip. |
+| 2 | Book me a flight. | Shown. Window seat. · `s04.c2.meta`: Its paper qualifies for both paper-aircraft world records. Entered neither. (R§13.5 med-high: Guinness allows paper up to A4 and 100 g/m²) | The sheet folded into a paper plane, hanging by its tail from a clip. |
 | 3 | What is the meaning of life? | Shown. It took a moment. | A blank sheet with one corner curling forward, under soft light from above. |
 | 4 | Something about the sea. | Shown. Not seaworthy. | The sheet folded into a small paper boat, hanging from a clip by its peak. |
 | 5 | Summarise this 400-page report. | Shown. Shorter than expected. | A blank sheet, evenly and brightly lit. |
@@ -328,7 +328,7 @@ Reduced motion: there's no leaf fall (the sheet is already hanging when the line
 |---|---|---|---|
 | `s05.m1` | 1 : √2 | ASPECT RATIO | 297 ÷ 210 = 1.4143. √2 = 1.4142. (R§1.1 high, derived) |
 | `s05.m2` | 1/16 m² | AREA | A0 is one square metre. aviva A4 is A0 halved four times: 0.06237 m², because ISO rounds down to the millimetre. (R§1.1 high · R§13.1 derived) |
-| `s05.m3` | 11 | SIZES, ONE SHAPE | A0 to A10. Every one is 1 : √2. (R§13.1 high) |
+| `s05.m3` | 11 | SIZES, ONE SHAPE | A0 to A10. Every one is 1 : √2, to the nearest millimetre. (R§13.1 high; rounding derived) |
 
 **The gimmick: Distil it**
 
@@ -336,7 +336,7 @@ Reduced motion: there's no leaf fall (the sheet is already hanging when the line
 |---|---|---|
 | `s05.g.eyebrow` | DISTILLATION | |
 | `s05.g.h3` | Distil it. | |
-| `s05.g.body` | Distillation makes small models from a large one without losing what it knows. Tear aviva in half: two smaller models, the same shape, the same knowledge. None. | 27 words |
+| `s05.g.body` | Distillation trains a small model to keep what a large one knows. Tear aviva in half: two smaller models, the same shape, the same knowledge. None. | 26 words (FC row 32: distillation aims to keep, it doesn't promise no loss) |
 | `s05.g.instr` | DRAG ALONG THE LINE TO DISTIL | beside the dotted line (fine pointer) |
 | `s05.g.hold` | HOLD TO TEAR | button for keyboard and touch. aria: "Hold to tear the sheet along the dotted line. Let go to pause." Keyboard: hold Space or Enter |
 | `s05.g.sr.progress` | Torn {n} %. | visually hidden, announced at 25 / 50 / 75 / 100 % |
@@ -363,19 +363,19 @@ Reduced motion: the tear advances only with drag, hold or scroll. The halves cro
 
 | # | `.v` | `.d` | `.t` | `.n` | Source | 3D cue |
 |---|---|---|---|---|---|---|
-| e1 | v0.1 | 179–141 BCE | Initial release. | Earliest surviving fragment, found at Fangmatan, Gansu. Used for a map, probably. | R§2 high | faint map lines |
-| e2 | v1.0 | 105 CE | Reported to the emperor. | Cai Lun presents a paper of mulberry fibre, hemp, rags and old fishing nets. Marketing begins. | R§2 high ("reported", not "invented") | **nothing** |
+| e1 | v0.1 | 179–141 BCE | Initial release. Ships with a map. | The earliest known paper bearing a drawing: a map, found at Fangmatan, Gansu. | R§2 high · R§13.10 #13 med-high | faint map lines |
+| e2 | v1.0 | 105 CE | Reported to the emperor. | Cai Lun presents a paper of tree bark, hemp, rags and old fishing nets. Marketing begins. | R§2 high ("reported", not "invented") · R§13.10 #12 high (the Hou Hanshu list) | **nothing** |
 | e3 | v1.1 | by 751 | Expands to Samarkand. | The famous origin story is disputed. The paper got there first. | R§2 med | (none) |
-| e4 | v1.4 | 868 | First dated printed book. | The Diamond Sutra. Its licence: "for universal free distribution". | R§2 high | (none) |
-| e5 | v2.0 | 1282 | Watermarks. | Fabriano adds an identity you can only see against the light. | R§2 med | **back-light + watermark** |
-| e6 | v2.1 | 1455 | Gutenberg Bible. | About three-quarters of the copies printed on paper. The rest on vellum. | R§2 med | (none) |
+| e4 | v1.4 | 868 | Oldest surviving dated printed book. | The Diamond Sutra. Its colophon doubles as a licence: "for universal free distribution". | R§2 high · R§13.10 #14 (British Library translation) | (none) |
+| e5 | v2.0 | c. 1282 | Watermarks. | Fabriano adds an identity you can only see against the light. | R§2 med | **back-light + watermark** |
+| e6 | v2.1 | c. 1455 | Gutenberg Bible. | About three-quarters of the copies printed on paper. The rest on vellum. | R§2 med | (none) |
 | e7 | v2.2 | 1719 | Wasps propose wood. | Réaumur tells the French Academy that wasps make paper from chewed wood fibre. | R§2 med | (none) |
 | e8 | v2.3 | 1786 | Aspect ratio documented. | Lichtenberg describes 1 : √2 in a letter. It ships 136 years later. | R§2 high · derived (1786 → 1922) | (none) |
-| e9 | v3.0 | 1799 | Continuous production. | Nicolas-Louis Robert patents the first paper machine. aviva becomes endless, in one direction. | R§2 high | sideways drift |
+| e9 | v3.0 | 1799 | Continuous production. | Louis-Nicolas Robert patents the first paper machine. aviva becomes endless, in one direction. | R§2 high | sideways drift |
 | e10 | v4.0 | 1844 | Wood pulp. | Friedrich Keller grinds wood into fibre. Rags deprecated. | R§2 med | (none) |
 | e11 | v5.0 | 1922 | DIN 476. | A0 defined as one square metre. | R§2 high | dimension lines on |
 | e12 | v5.1 | 1975 | ISO 216. | The A-series goes international. A4 as you know it. | R§2 high | dimension lines stay |
-| e13 | KNOWN ISSUE | 1975 | "The paperless office." | Predicted by Business Week. Global paper use then doubled between 1980 and 2000. | R§2 high (prediction) · med (doubling) | **the sheet doubles** |
+| e13 | KNOWN ISSUE | 1975 | "The paperless office." | Business Week quotes a forecast: by 1990, most record-handling will be electronic. World paper and board production then nearly doubles, from 171 to 324 million tonnes (1980–2000). | R§13.10 #3 high (the article and quote) · #4 med (production) | **the sheet doubles** |
 | e14 | REMOVED | (none) | Papyrus. | Was never paper: laminated strips, not a mat of fibres. | R§1.7 high | nothing |
 
 ### 3.8 `s07-surface` (macro → absorption → The Bleed)
@@ -384,7 +384,7 @@ Reduced motion: the tear advances only with drag, hold or scroll. The halves cro
 |---|---|---|
 | `s07.eyebrow` | MATERIALS | |
 | `s07.h2` | No glue. Just attraction. | centred over the macro |
-| `s07.body` | Up close, aviva is a mat of cellulose fibres. As it dries, hydrogen bonds between neighbouring fibres hold it together. Nothing else does. | 23 words (R§1.7 med) |
+| `s07.body` | Up close, aviva is a mat of cellulose fibres. As it dries, hydrogen bonds between neighbouring fibres hold it together. Nobody taught it that. | 24 words (R§1.7 med · R§13.10 #11: real copy paper also has fillers and sizing, so we no longer say "nothing else") |
 | `s07.loupe.label` | DRAG THE MAGNIFIER | on the bar magnifier |
 | `s07.loupe.readout` | Fibres: millimetres long, a fraction of a hair wide. | inside the bar (R§1.7 med, safe wording; no numbers) |
 | `s07.loupe.aria` | Magnifier position | `role="slider"`. `aria-valuetext`: "{n} mm across the sheet". ←/→ move 10 mm, Shift+←/→ move 50 mm |
@@ -410,9 +410,9 @@ Reduced motion: no dolly. Three cross-dissolves (surface still → absorption st
 
 | id | Value | Label | Body | Source |
 |---|---|---|---|---|
-| `s08.c1` | 5–7 | LIVES | Paper fibres survive five to seven trips through recycling. Each trip shortens and stiffens them, until they no longer bond. | R§3.5 high |
+| `s08.c1` | 5–7 | LIVES | Paper fibres are usually said to survive five to seven trips through recycling, each one leaving them shorter and stiffer. Researchers are aiming for 25. | R§3.5 · R§13.10 #9 (5–7 is the usual figure; up to 25 is the research aim) |
 | `s08.c2` | ≈ ¾ | RECYCLED IN EUROPE | About three-quarters of the paper and board used in Europe is recycled: 75.1 % in 2024, according to the European Paper Recycling Council. | R§13.3 high (replaces the 79.3 % figure, which was a one-year peak) |
-| `s08.c3` | ≈ 4.6 g | CO₂e PER SHEET | One study of an 80 g/m² A4 sheet put it at about 4.3–4.7 g of CO₂e, depending on the method. The sheet itself weighs about 5 g. | R§13.4 high · derived comparison |
+| `s08.c3` | ≈ 4.6 g | CO₂e PER SHEET (ISO METHOD) | One study of an A4 sheet of office paper found 4.3–4.7 g of CO₂e, depending on the method: 4.6 g by ISO's. The sheet itself weighs about 5 g. | R§13.4 · R§13.10 #16 high (4.64 g under ISO 14040/44; "80 g/m²" not re-confirmed, so dropped) · derived comparison |
 | `s08.c3.cite` | | | Dias & Arroja, *Journal of Cleaner Production*, 2012. | R§13.4 |
 
 | id | Copy | Notes |
@@ -489,11 +489,11 @@ Reduced motion: no crumple and roll. The losing sheet fades out and a new one fa
 | c3 | Refusal rate: 0.0 %. | It cannot refuse. Whatever you write on it, it keeps. | REQUESTS DECLINED SINCE 179 BCE: 0 | A sheet with one line of pencil handwriting across it. | R§2 high (date) · line borrowed from C |
 | c4 | Needle in a haystack: 100 %. | The needle is a pencil. Recall drops to 0 % if you lose the pencil. | TEST NEEDLE: ONE HB PENCIL | An HB pencil lying diagonally across the blank sheet. | (joke) |
 | c5 | Alignment: left, centre, right or justified. | Solved. | FOUR SETTINGS · ALL SAFE | The sheet with four short grey text blocks, set left, centred, right and justified. | line borrowed from C |
-| c6 | Unlimited undo. | Pencil only. Graphite sits on the fibres; ink soaks into them. Ink is forever. | SEE ALSO: THE DOT | The sheet with a single small ink-blue dot near its lower right corner. | R§13.8 high |
-| c7 | Known side effect. | Its edge is microscopically jagged, so it saws rather than slices. Fingertips are packed with nerves, and the cut is too shallow to clot. | SEVERITY: MINOR · PAIN: DISPROPORTIONATE | An extreme close-up of the sheet's edge, showing fine ragged fibres. | R§3.4 high |
-| c7.m | | Its jagged edge saws rather than slices, and the cut is too shallow to clot. | | | |
-| c8 | Our roadmap reaches the Moon. Our sheet reaches 6.4 mm. | Ideally, 42 folds would make a 0.1 mm sheet about 440,000 km thick, past the Moon. By Gallivan's formula, an A4 sheet stops at six. | STATE OF THE ART: 12 FOLDS · B. GALLIVAN, 2002 | A small, thick block of paper folded six times, with a tiny grey Moon far behind it. | R§13.2 (all three numbers verified) · R§3.1 high (Moon distance, record) · line borrowed from B |
-| c8.m | | In theory, 42 folds pass the Moon. In practice, an A4 sheet stops at six. | | | |
+| c6 | Unlimited undo. | Pencil only. Graphite mostly sits on the fibres; ink soaks in. Ink is forever. | SEE ALSO: THE DOT | The sheet with a single small ink-blue dot near its lower right corner. | R§13.8 high |
+| c7 | Known side effect. | Its edge is microscopically jagged, so it saws rather than slices. Fingertips are packed with nerves, and the cut is usually too shallow to clot. | SEVERITY: MINOR · PAIN: DISPROPORTIONATE | An extreme close-up of the sheet's edge, showing fine ragged fibres. | R§3.4 · R§13.10 #17 (nerves: Ohio State; edge and clotting: Big Think) |
+| c7.m | | Its jagged edge saws rather than slices, and the cut is usually too shallow to clot. | | | |
+| c8 | Our roadmap reaches the Moon. Our sheet reaches 6.4 mm. | Ideally, 42 folds would make a 0.1 mm sheet about 440,000 km thick, past the Moon. By Gallivan's formula, an A4 sheet folded the same way each time stops at six. | STATE OF THE ART: 12 FOLDS · B. GALLIVAN, 2002 | A slender bar of paper, an A4 sheet folded six times the same way, with a tiny grey Moon far behind it. | R§13.2 (all three numbers verified) · R§13.10 #1 (one direction only; alternating allows seven) · R§3.1 high (Moon distance, record) · line borrowed from B |
+| c8.m | | In theory, 42 folds pass the Moon. Folded the same way each time, an A4 sheet stops at six. | | | |
 
 Reduced motion: the horizontal translation stays (it's scroll-driven), with no hover tilt.
 
@@ -557,7 +557,7 @@ Mobile: the dialog stacks above the sheet, and the table becomes a horizontally 
 | `s13.affil` | aviva Research, third floor (near the printer) | |
 | `s13.btn.paper` | PAPER · PDF, 8 PAGES | → `research/void-of-all-characters.pdf` |
 | `s13.btn.model` | MODEL · .OBJ, 4 VERTICES | → `research/aviva-a4.obj` |
-| `s13.btn.weights` | WEIGHTS · 4.99 g | disabled. Tooltip / description `s13.btn.weights.tip`: "Not downloadable. They weigh 4.99 g." |
+| `s13.btn.weights` | WEIGHTS · 4.99 g | disabled. Tooltip / description `s13.btn.weights.tip`: "Not downloadable. They weigh 4.99 g, by calculation." |
 | `s13.btn.bib` | BIBTEX | → `research/citation.bib` |
 | `s13.abstract.l` | Abstract | |
 | `s13.abstract` | We present aviva A4, a 210 × 297 mm foundation model pre-trained on no data. It achieves a hallucination rate of 0.00 % on every prompt we tried, and every prompt we didn't. Distilled variants keep their shape exactly. | 40 words; the column is ≈ 720 px wide so it sets in 4 lines |
@@ -568,7 +568,7 @@ Mobile: the dialog stacks above the sheet, and the table becomes a horizontally 
 | `s13.review.who` | Reviewer 2 · Weak accept · Confidence: absolute | |
 | `s13.bib.l` | BibTeX | the code box shows the entry from Part 4.4, verbatim |
 | `s13.bib.copy` | COPY | aria: "Copy the BibTeX citation". After copying, the label reads `s13.bib.copied`: "COPIED" for 2 s |
-| `s13.dist` | Distribution: "for universal free distribution", as the Diamond Sutra put it in 868. | small, last line (R§2 high) |
+| `s13.dist` | Distribution: "for universal free distribution", as the Diamond Sutra's colophon put it in 868. | small, last line (R§2 high · R§13.10 #14: British Library translation) |
 
 ### 3.15 `s14-release` (the ending)
 
@@ -715,7 +715,7 @@ The per-section tables above hold the copy; this table is the checklist the web-
 - **Keywords:** foundation models · pre-training · distillation · hallucination · ISO 216 · paper
 
 **Abstract (full text).**
-> We present aviva A4, a 210 × 297 mm foundation model pre-trained on no data. Following Locke, who described the mind before experience as "white paper, void of all characters", we remove the training corpus altogether. aviva A4 achieves a hallucination rate of 0.00 % and a refusal rate of 0.0 % on every prompt we tried, and every prompt we didn't. Its architecture, standardised as ISO 216, is closed under halving: distilled variants (aviva A5, A6) keep their shape and all of their knowledge. We report results on retrieval, preference, distillation and scaling. We find a hard scaling limit at six folds, and an environmental cost of about its own weight. All outputs are released for universal free distribution.
+> We present aviva A4, a 210 × 297 mm foundation model pre-trained on no data. Following Locke, who described the mind before experience as "white paper, void of all characters", we remove the training corpus altogether. aviva A4 achieves a hallucination rate of 0.00 % and a refusal rate of 0.0 % on every prompt we tried, and every prompt we didn't. Its architecture, standardised as ISO 216, is closed under halving: distilled variants (aviva A5, A6) keep their shape and all of their knowledge. We report results on retrieval, preference, distillation and scaling. We find a hard scaling limit at six folds made the same way each time, and an environmental cost of about its own weight. All outputs are released for universal free distribution.
 
 **Figure 1 (teaser).** Two A4 rectangles side by side at true 1 : √2, drawn in 0.5 pt graphite with a faint drop shadow. The left is labelled "aviva A4" and the right "Output". The two are identical.
 *Caption:* "Figure 1. aviva A4 (left) and a typical output (right), shown at the same scale."
@@ -731,13 +731,15 @@ The per-section tables above hold the copy; this table is the checklist the web-
 
 **2 Related work.**
 > *Erasure as model editing.* In 1953 Robert Rauschenberg obtained a drawing from Willem de Kooning and spent weeks erasing it; the result is in the collection of SFMOMA [Rauschenberg]. Our approach is more efficient: aviva ships pre-erased.
-> *The paperless office.* In 1975 Business Week predicted that most record-handling would be electronic by 1990 [Business Week]. Global paper consumption then doubled between 1980 and 2000, and Sellen and Harper found that introducing email raised an organisation's paper use by about 40 % [Sellen & Harper]. We thank the prediction for its contribution to our market.
-> *Attention.* Prior work established that attention is all you need [Margin & Gutter, fictional]. aviva requires none, and in user studies it received a great deal.
+> *The paperless office.* In 1975 Business Week reported a forecast that most record-handling would be electronic by 1990 [Business Week]. World paper and board production then nearly doubled, from 171 to 324 million tonnes between 1980 and 2000, and Sellen and Harper found that introducing email raised an organisation's paper use by about 40 % [Sellen & Harper]. We thank the forecast for its contribution to our market.
+> *Attention.* Recent work argues that attention is all you need, except here [Margin & Gutter]. aviva requires none, and in user studies it received a great deal.
+
+(Margin & Gutter is our fictional reference. It parodies a well-known title but is never presented as that paper.)
 
 (R§5.3 high · R§13.7 · R§2 high/med)
 
 **3 Architecture.**
-> aviva A4 belongs to the A-series defined by ISO 216 [ISO 216], descended from DIN 476 (1922), in which A0 has an area of one square metre and every size is half of the previous one [DIN 476]. Halving a sheet with sides s < l produces sides l/2 and s. For the shape to survive, s / (l/2) = l / s, so l² = 2s² and l / s = √2. This is the only ratio with this property. Lichtenberg described it in a letter in 1786 [Lichtenberg]; standardisation followed 136 years later. Our reference model measures 210 × 297 mm (297 / 210 = 1.4143) and has an area of 62,370 mm², slightly under 1/16 m² because sizes are rounded down to the millimetre.
+> aviva A4 belongs to the A-series defined by ISO 216 [ISO 216], descended from DIN 476 (1922), in which A0 has an area of one square metre and every size is half of the previous one [DIN 476]. Halving a sheet with sides s < l produces sides l/2 and s. For the shape to survive, s / (l/2) = l / s, so l² = 2s² and l / s = √2. This is the only ratio with this property. Lichtenberg described it in a letter in 1786 [Lichtenberg]; DIN standardisation followed 136 years later. Our reference model measures 210 × 297 mm (297 / 210 = 1.4143) and has an area of 62,370 mm², slightly under 1/16 m² because sizes are rounded down to the millimetre.
 
 (R§1.1 high · R§2 high · R§13.1 high/derived)
 
@@ -754,7 +756,9 @@ The per-section tables above hold the copy; this table is the checklist the web-
 | aviva A6 | 105 × 148 | 15,540 | 1.24 | distilled further |
 
 **4 Pre-training.**
-> aviva A4 was pre-trained on nothing (Table 2). Because the training set is empty, no benchmark can have leaked into it, no copyrighted work was used, and no data cleaning was required. Pre-training finished before it started. The fibres themselves were never consulted: as a sheet dries, hydrogen bonds between neighbouring cellulose fibres hold it together, and no further supervision is applied [materials, R§1.7].
+> aviva A4 was pre-trained on nothing (Table 2). Because the training set is empty, no benchmark can have leaked into it, no copyrighted work was used, and no data cleaning was required. Pre-training finished before it started. The fibres were not supervised either: as a sheet dries, hydrogen bonds between neighbouring cellulose fibres hold it together unprompted. Fillers and sizing, added at the mill, are the only post-training.
+
+(R§1.7 med · R§13.10 #11 med-high)
 
 **Table 2. Pre-training data**
 
@@ -774,9 +778,9 @@ The per-section tables above hold the copy; this table is the checklist the web-
 
 > *5.4 The Arena.* Following the practice of blind pairwise comparison, visitors were shown two responses to the prompt "Say something profound" and asked to choose. Both responses were aviva A4. aviva A4 won 50.0 % of comparisons and lost the other 50.0 % (Figure 3). We consider both results state of the art.
 > *5.5 Distillation.* We distilled aviva A4 by tearing it along its midline. Each student is the same shape as the teacher and retains all of its knowledge (Table 3). A second round produced aviva A6. We stopped there, as below A6 the students are better described as confetti.
-> *5.6 Scaling.* Each fold doubles thickness. Ideally, 42 folds of a 0.1 mm sheet would reach about 440,000 km, beyond the Moon's average distance of 384,400 km. By Gallivan's formula, the minimum length needed for n single-direction folds is L = (πt / 6)(2ⁿ + 4)(2ⁿ − 1) [Gallivan]. For t = 0.1 mm, seven folds need about 0.88 m, but the long side of A4 is 0.297 m, so six folds is the ceiling (Figure 4). The record, 12 folds, was set by Britney Gallivan in 2002 using about 1.2 km of tissue paper.
+> *5.6 Scaling.* Each fold doubles thickness. Ideally, 42 folds of a 0.1 mm sheet would reach about 440,000 km, beyond the Moon's average distance of 384,400 km. By Gallivan's formula, the minimum length needed for n single-direction folds is L = (πt / 6)(2ⁿ + 4)(2ⁿ − 1) [Gallivan]. For t = 0.1 mm, seven folds need about 0.88 m, but the long side of A4 is 0.297 m, so six single-direction folds is the ceiling (Figure 4). Her second formula, for folds in alternating directions, permits a seventh; we leave this to future work. The record, 12 folds, was set by Gallivan herself in 2002 using about 1.2 km of tissue paper [Guinness World Records].
 
-(R§13.2 · R§3.1 high)
+(R§13.2 · R§13.10 #1 · R§3.1 high)
 
 **Figure 3 (the Arena).** A bar chart with two equal bars, both labelled "aviva A4", at 50.0 %. The error bars are drawn and have zero length.
 *Caption:* "Figure 3. Win rate in blind pairwise comparison. Error bars are present."
@@ -793,31 +797,32 @@ The per-section tables above hold the copy; this table is the checklist the web-
 - a solid graphite line and dots for n = 0–6, labelled "our sheet";
 - a dashed line beyond n = 6, labelled "our roadmap";
 - horizontal reference lines for "a ream, ≈ 5 cm" and "the Moon, 384,400 km";
-- a vertical hairline at n = 6, labelled "wall".
+- a vertical hairline at n = 6, labelled "wall (same direction each time)";
+- a small open dot at n = 7, labelled "alternating: 7".
 
-*Caption:* "Figure 4. Scaling behaviour. The dashed line is our roadmap. The solid line is our sheet."
+*Caption:* "Figure 4. Scaling behaviour for folds made the same way each time. The dashed line is our roadmap. The solid line is our sheet."
 (R§13.2 · R§1.2 · R§3.1)
 
 **6 Fine-tuning from human feedback.**
-> aviva A4 is fine-tuned by its user, with a pencil. Graphite rests on the surface of the fibres and is largely removable; ink soaks into the fibres by capillary action and is not [R§13.8]. We therefore recommend graphite for experiments and ink for commitments. Erasure is incomplete: the pressure of writing usually leaves an impression after the graphite is gone [R§13.8]. The material for erasing pencil was named "rubber" by Joseph Priestley in 1770 [Priestley]. We have not improved on it.
+> aviva A4 is fine-tuned by its user, with a pencil. Graphite rests on the surface of the fibres and is largely removable; ink soaks into the fibres by capillary action and is not [Popular Science]. We therefore recommend graphite for experiments and ink for commitments. Erasure is incomplete: the pressure of writing usually leaves an impression after the graphite is gone [Hawkeye Forensic]. In 1770 Joseph Priestley recommended a new gum, sold by Edward Nairne, as "excellently adapted to the purpose of wiping from paper the mark of black-lead-pencil" [Priestley]; it soon came to be called rubber. We have not improved on it.
 
-(R§13.8 high / med)
+(R§13.8 high / med · R§13.10 #6 med)
 
 **Figure 5 (absorption).** Three microscope panels in a row, rendered by us from the lab's ink-front shader at t = 0.05, 0.35 and 1.0: ink-blue spreading along white fibres.
 *Caption:* "Figure 5. Fine-tuning with ink is irreversible. We consider this a feature."
 
 **7 Safety.**
-> We are aware of one side effect. The edge of the sheet is microscopically jagged, so it saws rather than slices; fingertips are dense in pain receptors, and the cut is usually too shallow to clot [Ohio State]. Paper ignition temperatures quoted in the literature range from about 230 °C to about 450 °C depending on the paper and the method; the widely known figure of 451 °F comes from a novel [Bradbury]. We did not test this, and neither should you.
+> We are aware of one side effect. The edge of the sheet is microscopically jagged, so it saws rather than slices; fingertips are dense in pain receptors, and the cut is usually too shallow to clot [Big Think; Vallabh]. Paper ignition temperatures quoted in the literature range from about 230 °C to about 450 °C depending on the paper and the method; the widely known figure of 451 °F was popularised by a novel [Bradbury]. We did not test this, and neither should you.
 
-(R§3.4 high · R§3.3 med)
+(R§3.4 · R§13.10 #17 · R§3.3 med)
 
 **Figure 6 (the edge).** A graphite line drawing of the sheet's edge under magnification, ragged fibres projecting from a straight line, with a 0.1 mm scale bar.
 *Caption:* "Figure 6. The only known side effect, at magnification."
 
 **8 Environmental impact.**
-> One life-cycle study of an 80 g/m² A4 sheet estimated 4.29–4.74 g CO₂e per sheet, depending on the method [Dias & Arroja]. The sheet weighs about 5 g, so the model's footprint is approximately its own weight. Paper fibres can be recycled five to seven times before they become too short and stiff to bond [hornification], and about three-quarters of the paper and board used in Europe is recycled (75.1 % in 2024) [EPRC]. aviva therefore has a finite number of afterlives, which we find reassuring.
+> One life-cycle study of an A4 sheet of office paper estimated 4.29–4.74 g CO₂e per sheet depending on the method, 4.64 g under ISO 14040/44 [Dias & Arroja]. The sheet weighs about 5 g, so the model's footprint is approximately its own weight. Paper fibres are usually said to survive five to seven rounds of recycling before they become too short and stiff to bond, although researchers are aiming for 25 [Karlstad University]; and about three-quarters of the paper and board used in Europe is recycled (75.1 % in 2024) [EPRC]. aviva therefore has a finite number of afterlives, which we find reassuring.
 
-(R§13.4 high · R§3.5 high · R§13.3 high)
+(R§13.4 high · R§3.5 · R§13.10 #9, #16 · R§13.3 high)
 
 **9 Limitations.**
 > aviva A4 knows nothing. It cannot forget a fold. It will be read by anyone who holds it. Its context window is a hard limit of 210 × 297 mm. A known issue, reported in 1975, predicted that it would be replaced by the paperless office; we are monitoring this.
@@ -837,7 +842,8 @@ The per-section tables above hold the copy; this table is the checklist the web-
 | Needle in a haystack | 100 % (pencil present) |
 | Context window | 62,370 mm² |
 | Arena win rate | 50.0 % |
-| Folds before the wall | 6 |
+| Folds before the wall, same direction each time | 6 |
+| Folds before the wall, alternating directions | 7 (ideal) |
 | Training tokens | 0 |
 
 ### 4.4 References (page 8)
@@ -845,20 +851,24 @@ The per-section tables above hold the copy; this table is the checklist the web-
 Real works are cited as sourced (R§). Fictional works are obviously fictional (impossible venues, page ranges and identifiers). The visual-designer typesets them as one alphabetical list; fiction is not marked as such inside the PDF, and the joke depends on that.
 
 **Real** (the brief's source tag is in brackets; it is not printed):
-- Bradbury, R. (1953). *Fahrenheit 451.* [R§3.3]
-- Business Week (1975). The office of the future. *(article title to be confirmed by the researcher; the prediction itself is R§2 high)*
-- Dias, A. C., & Arroja, L. (2012). Comparison of methodologies for estimating the carbon footprint: case study of office paper. *Journal of Cleaner Production*, 24, 30–35. [R§13.4]
-- DIN 476 (1922). Paper formats. Deutsches Institut für Normung. [R§2]
-- European Paper Recycling Council (2025). Press release on the 2024 European paper recycling rate. [R§13.3]
-- Gallivan, B. (2002). Folding paper in half twelve times. *(exact title of her booklet to be confirmed by the researcher; the record and formula are R§3.1 high)*
+- Big Think. Here's why paper cuts hurt so damn much (web article). [R§13.10 #17]
+- Bradbury, R. (1953). *Fahrenheit 451.* New York: Ballantine Books. [R§3.3]
+- Business Week (1975). The Office of the Future. *Business Week*, 30 June 1975. [R§13.10 #3]
+- Dias, A. C., & Arroja, L. (2012). Comparison of methodologies for estimating the carbon footprint – case study of office paper. *Journal of Cleaner Production*, 24, 30–35. doi:10.1016/j.jclepro.2011.11.005 [R§13.4, R§13.10 #16]
+- DIN 476 (1922). *Papierformate.* August 1922. [R§2]
+- European Paper Recycling Council (2025). European Paper Recycling Council reports strong recycling rates for 2024. Press release, July 2025. [R§13.3]
+- Gallivan, B. (2002). *How to Fold Paper in Half Twelve Times: An "Impossible Challenge" Solved and Explained.* Pomona, CA: Historical Society of Pomona Valley. [R§13.10 #2]
 - Guinness World Records (2025, 2026). Farthest flight by a paper aircraft; Longest time flying a paper aircraft. [R§3.2, R§13.5]
-- ISO 216 (first edition 1975). Writing paper and certain classes of printed matter: trimmed sizes, A and B series. *(edition and exact title to be confirmed)* [R§1.1, R§13.1]
+- Hawkeye Forensic. Can you erase the evidence? The forensic science of erased documents (web article). [R§13.8]
+- ISO 216:2007. *Writing paper and certain classes of printed matter — Trimmed sizes — A and B series, and indication of machine direction.* Geneva: ISO (replaces ISO 216:1975). [R§13.10 #7]
+- Karlstad University. Mystery around hornification about to be solved (news article). [R§3.5]
 - Lichtenberg, G. C. (1786). Letter to Johann Beckmann, 25 October 1786. [R§2]
 - Locke, J. (1689/1690). *An Essay Concerning Human Understanding*, Book II, ch. I, §2. [R§13.6]
-- Ohio State University Wexner Medical Center. Why do papercuts hurt so much? (web article). [R§3.4]
-- Priestley, J. (1770). On the "rubber" for wiping pencil marks from paper. *(source work to be confirmed)* [R§13.8]
-- Rauschenberg, R. (1953). *Erased de Kooning Drawing.* San Francisco Museum of Modern Art. [R§5.3, R§13.7]
-- Sellen, A. J., & Harper, R. H. R. (2003). *The Myth of the Paperless Office.* MIT Press. [R§2]
+- Popular Science. How do erasers work? (web article). [R§13.8]
+- Priestley, J. (1770). *A Familiar Introduction to the Theory and Practice of Perspective.* London: J. Johnson and J. Payne. [R§13.10 #6]
+- Rauschenberg, R. (1953). *Erased de Kooning Drawing.* San Francisco Museum of Modern Art, accession 98.298. [R§5.3, R§13.7]
+- Sellen, A. J., & Harper, R. H. R. (2002). *The Myth of the Paperless Office.* MIT Press. [R§2, R§13.10 #5]
+- Vallabh, J. (2025). Why do papercuts hurt so much? The Ohio State University Wexner Medical Center blog, 9 May 2025. [R§3.4, R§13.10 #17]
 
 **Fictional:**
 - Bleed, B., Margin, A., & Gutter, G. (2023). On the absorption of everything. *Journal of Capillary Studies*, 0(0), 0–0.
@@ -936,7 +946,7 @@ f 1/1/1 3/3/1 4/4/1
 
 ### 5.2 Hero and the show-through (enrichment 5): how to fake it in the shader
 - **Composition (end of the intro).** The camera looks down at about −68° pitch. The giant **aviva** wordmark is printed on the studio floor in matte graphite, spanning 88 % of the viewport width and centred at y 56 %. The sheet lies flat over the **"i"** and the inner halves of both **"v"**s, so the word reads "a v [i] v a" with the middle letters seen softly *through* the paper. The key light is warm from the top left at a raking 60°, with a cool fill from the right. The contact shadow is soft and light (decision #12b).
-- **Physics we imitate.** Show-through happens when paper rests *on* print. The print is softened and lightened by the fibres (80 g/m² copy paper is about 94 % opaque, R§1.4 med), and it gets blurrier the moment the paper lifts. So show-through must depend on the **gap**, not just on overlap.
+- **Physics we imitate.** Show-through happens when paper rests *on* print. The print is softened and lightened by the fibres (80 g/m² copy paper is about 92–96 % opaque, R§1.4 med · fact-check D1), and it gets blurrier the moment the paper lifts. So show-through must depend on the **gap**, not just on overlap.
 - **The fake** (in the paper's fragment shader; one texture fetch, safe on phones):
   1. The floor wordmark is a decal texture `uWordmark` (alpha = ink), mipmapped, mapped by world XZ: `uvW = (worldPos.xz - uWmOrigin) / uWmSize`.
   2. `gap = worldPos.y - uFloorY` (metres), computed per front-facing fragment of the sheet.
@@ -1011,7 +1021,7 @@ The way back to white is not a reverse bleed. A fresh white page (the s11 DOM gr
 | c5 | the sheet with four short grey text blocks reading "We have solved alignment.", set left, centred, right and justified (real words, no lorem ipsum) |
 | c6 | a close view of the 3 mm ink dot on otherwise blank paper, soft light: the dot is the hero |
 | c7 | an edge macro: ragged fibres along the edge under grazing light, against the one darker backdrop among the cards |
-| c8 | a small, thick block (A4 folded six times, ≈ 26 × 37 mm, visibly layered) on the white floor, with a small grey Moon sphere far behind, out of focus |
+| c8 | a slender bar: an A4 sheet folded six times **the same way**, across its long side, so it measures ≈ 210 × 4.6 mm and 6.4 mm thick, with all 64 layers visible along the cut face; it lies on the white floor, with a small grey Moon sphere far behind, out of focus |
 
 ### 5.7 Illustration style: graphite, not sketchbook
 - **Line.** Single-weight graphite lines with real pencil grain (a 1.25 px line at 1×, with a subtle grain texture or SVG turbulence filter). Precise, unhurried, mostly unshaded; at most a few light parallel strokes for shadow.
@@ -1075,7 +1085,7 @@ The claim-card renders (5.6) are used in both modes.
 
 Also in the brief (small, not counted above):
 - "VERSO: ALSO BLANK." as the sheet turns (s02);
-- the disabled PRINT ("Nothing to print. Nothing is for sale.") and WEIGHTS ("They weigh 4.99 g.") buttons;
+- the disabled PRINT ("Nothing to print. Nothing is for sale.") and WEIGHTS ("They weigh 4.99 g, by calculation.") buttons;
 - the WebGL context-loss message ("This demo can't crash. It can only crease.");
 - the 404 page ("Nothing here. To be fair, that is the product.");
 - text selection styled as ink (ink-blue ground, paper-white text).
@@ -1153,12 +1163,14 @@ Banned-word sweep of Part 3: none of the R§7.6 punchlines and none of our clich
 
 ## Part 8. Needs and resolved questions
 
-### Needed from the researcher (for the PDF's reference list only; the site copy doesn't depend on any of these)
-1. The exact title and publisher of **Britney Gallivan's 2002 booklet**. The record and formula are already R§3.1 high.
-2. The exact title and date of the **1975 Business Week** "office of the future" article. The prediction is R§2 high.
-3. The work in which **Priestley (1770)** proposed "rubber" (R§13.8 has the quote, not the title).
-4. The exact **ISO 216** title and current edition for the citation.
-5. A one-line check of the derived C5 row in the s12 table: A5 fits a C5 envelope flat, and A3 fits when folded twice (C5 = 162 × 229 mm, R§1.1).
+### From the researcher: resolved by the fact-check (`work/reviews/brief-factcheck.md`, R§13.10)
+1. **Gallivan's booklet:** *How to Fold Paper in Half Twelve Times: An "Impossible Challenge" Solved and Explained*, Historical Society of Pomona Valley, 2002 (applied in Part 4.4).
+2. **Business Week:** "The Office of the Future", 30 June 1975. The forecast is a consultant's, quoted in the article; no page range is printed (applied in s06.e13, paper §2 and Part 4.4).
+3. **Priestley:** *A Familiar Introduction to the Theory and Practice of Perspective* (London: J. Johnson and J. Payne, 1770). He *recommended* Nairne's gum; he did not name it "rubber" (applied in paper §6 and Part 4.4).
+4. **ISO 216:2007**, cited by year (it replaced ISO 216:1975). No edition number is printed (Part 4.4).
+5. **C5 row:** verified. A5 fits flat, A4 folded once, A3 folded twice (derived) (s12 table, unchanged).
+
+**Still open (optional):** R§13.10 #17 names ScienceAlert as a second source for the jagged-edge and clotting claims, but gives no title or URL. The PDF therefore cites Big Think, which R§13.10 #17 does give, alongside Vallabh (Ohio State). Add a ScienceAlert entry only if the researcher supplies its details.
 
 ### Open questions I resolved myself
 1. **"Cool me down." became "I need some air."** (s04 card 6), so there's no temperature or thermal echo of ORYZO #8 / #34.
@@ -1187,3 +1199,91 @@ Banned-word sweep of Part 3: none of the R§7.6 punchlines and none of our clich
 13. **The colophon doesn't name the typeface**, so no placeholder is needed; CREDITS.md names it.
 14. **The footer's "Our code: MIT licence."** assumes the lead adds the MIT LICENSE, as the lead's instructions say.
 15. **Nav "PAPER" links to "The paper."** (the research). The double meaning is intended.
+
+---
+
+## Part 9. Changelog (fact-check pass, 2026-10-02)
+
+Source: `work/reviews/brief-factcheck.md` (78 rows + the must-fix list) and `work/01-research.md` §13.10. Every change below is already applied in Parts 1–8. **Old → new**, so the web-developer (site copy) and the visual-designer (PDF, renders) can apply the diffs. "FC row n" refers to the fact-check table.
+
+### 9.1 Site copy (web-developer: update the DOM text)
+
+| # | Id / location | Old | New | Why |
+|---|---|---|---|---|
+| 1 | `s03.note` | Pencil sits on the fibres, so it erases. Ink soaks into them, so it doesn't. | Pencil mostly sits on the fibres, so it mostly erases. Ink soaks in, so it doesn't. | FC row 21 (hedge once: "largely") |
+| 2 | `s04.note` | Strictly speaking, we calculated them. Real sheets vary by about ±2.5 %. | Strictly speaking, we calculated them. Real sheets vary by a few per cent. | Must-fix 7 / FC row 24 |
+| 3 | `s04.c2.meta` | Eligible for both paper-aircraft world records. Entered neither. | Its paper qualifies for both paper-aircraft world records. Entered neither. | FC row 25 (precision: the rules are about the paper) |
+| 4 | `s05.m3` | A0 to A10. Every one is 1 : √2. | A0 to A10. Every one is 1 : √2, to the nearest millimetre. | Must-fix 12 / FC row 29 |
+| 5 | `s05.g.body` | Distillation makes small models from a large one without losing what it knows. Tear aviva in half: two smaller models, the same shape, the same knowledge. None. | Distillation trains a small model to keep what a large one knows. Tear aviva in half: two smaller models, the same shape, the same knowledge. None. | Must-fix 4 / FC row 32 |
+| 6 | `s06.e1.t + .n` | Initial release. / Earliest surviving fragment, found at Fangmatan, Gansu. Used for a map, probably. | Initial release. Ships with a map. / The earliest known paper bearing a drawing: a map, found at Fangmatan, Gansu. | Must-fix 13 / FC row 4 |
+| 7 | `s06.e2.n` | Cai Lun presents a paper of mulberry fibre, hemp, rags and old fishing nets. Marketing begins. | Cai Lun presents a paper of tree bark, hemp, rags and old fishing nets. Marketing begins. | Must-fix 8 / FC row 5 |
+| 8 | `s06.e4.t + .n` | First dated printed book. / The Diamond Sutra. Its licence: "for universal free distribution". | Oldest surviving dated printed book. / The Diamond Sutra. Its colophon doubles as a licence: "for universal free distribution". | Must-fix 9 / FC row 7 |
+| 9 | `s06.e5.d` | 1282 | c. 1282 | FC row 8 (optional precision) |
+| 10 | `s06.e6.d` | 1455 | c. 1455 | FC row 9 (printing finished 1454–55) |
+| 11 | `s06.e9.n` | Nicolas-Louis Robert patents the first paper machine. aviva becomes endless, in one direction. | Louis-Nicolas Robert patents the first paper machine. aviva becomes endless, in one direction. | FC row 12 (name order as on Wikipedia, easier to check) |
+| 12 | `s06.e13.n` | Predicted by Business Week. Global paper use then doubled between 1980 and 2000. | Business Week quotes a forecast: by 1990, most record-handling will be electronic. World paper and board production then nearly doubles, from 171 to 324 million tonnes (1980–2000). | Must-fix 5 / FC row 15 |
+| 13 | `s07.body` | Up close, aviva is a mat of cellulose fibres. As it dries, hydrogen bonds between neighbouring fibres hold it together. Nothing else does. | Up close, aviva is a mat of cellulose fibres. As it dries, hydrogen bonds between neighbouring fibres hold it together. Nobody taught it that. | Must-fix 3 / FC row 17 (a true undercut that echoes "pre-trained on nothing", instead of a hedge) |
+| 14 | `s08.c1` | Paper fibres survive five to seven trips through recycling. Each trip shortens and stiffens them, until they no longer bond. | Paper fibres are usually said to survive five to seven trips through recycling, each one leaving them shorter and stiffer. Researchers are aiming for 25. | Must-fix 6 / FC row 33 |
+| 15 | `s08.c3.l + .b` | CO₂e PER SHEET / One study of an 80 g/m² A4 sheet put it at about 4.3–4.7 g of CO₂e, depending on the method. The sheet itself weighs about 5 g. | CO₂e PER SHEET (ISO METHOD) / One study of an A4 sheet of office paper found 4.3–4.7 g of CO₂e, depending on the method: 4.6 g by ISO's. The sheet itself weighs about 5 g. | Must-fix 14 / FC row 35 |
+| 16 | `s11.c6.cap` | Pencil only. Graphite sits on the fibres; ink soaks into them. Ink is forever. | Pencil only. Graphite mostly sits on the fibres; ink soaks in. Ink is forever. | FC row 21 (hedge) |
+| 17 | `s11.c7.cap` | … Fingertips are packed with nerves, and the cut is too shallow to clot. | … Fingertips are packed with nerves, and the cut is usually too shallow to clot. | Must-fix 11 / FC row 41 |
+| 18 | `s11.c7.m` | Its jagged edge saws rather than slices, and the cut is too shallow to clot. | Its jagged edge saws rather than slices, and the cut is usually too shallow to clot. | Must-fix 11 / FC row 41 |
+| 19 | `s11.c8.cap + .alt` | cap: … By Gallivan's formula, an A4 sheet stops at six. / alt: A small, thick block of paper folded six times, with a tiny grey Moon far behind it. | cap: … By Gallivan's formula, an A4 sheet folded the same way each time stops at six. / alt: A slender bar of paper, an A4 sheet folded six times the same way, with a tiny grey Moon far behind it. | Must-fix 1 / FC row 43 |
+| 20 | `s11.c8.m` | In theory, 42 folds pass the Moon. In practice, an A4 sheet stops at six. | In theory, 42 folds pass the Moon. Folded the same way each time, an A4 sheet stops at six. | Must-fix 1 / FC row 43 ("in practice" was never measured) |
+| 21 | `s13.btn.weights.tip` | Not downloadable. They weigh 4.99 g. | Not downloadable. They weigh 4.99 g, by calculation. | FC row 50 (consistent with "calculated, not weighed") |
+| 22 | `s13.dist` | Distribution: "for universal free distribution", as the Diamond Sutra put it in 868. | Distribution: "for universal free distribution", as the Diamond Sutra's colophon put it in 868. | FC row 7 |
+
+### 9.2 Research paper: text, figures, tables (visual-designer: the PDF)
+
+| # | Id / location | Old | New | Why |
+|---|---|---|---|---|
+| 23 | `paper.abstract` | We find a hard scaling limit at six folds, … | We find a hard scaling limit at six folds made the same way each time, … | Must-fix 1 / FC row 68 |
+| 24 | `paper.§2.paperless` | In 1975 Business Week predicted … Global paper consumption then doubled between 1980 and 2000 … We thank the prediction … | In 1975 Business Week reported a forecast … World paper and board production then nearly doubled, from 171 to 324 million tonnes between 1980 and 2000 … We thank the forecast … | Must-fix 5 / FC rows 57, 58 |
+| 25 | `paper.§2.attention` | Prior work established that attention is all you need [Margin & Gutter, fictional]. | Recent work argues that attention is all you need, except here [Margin & Gutter]. | FC row 60 (a real title must not be credited to fictional authors; "fictional" no longer printed in the PDF text) |
+| 26 | `paper.§3` | … standardisation followed 136 years later. | … DIN standardisation followed 136 years later. | FC row 61 |
+| 27 | `paper.§4` | The fibres themselves were never consulted: … hold it together, and no further supervision is applied [materials, R§1.7]. | The fibres were not supervised either: … hold it together unprompted. Fillers and sizing, added at the mill, are the only post-training. | FC row 66 (fillers and sizing exist) + the brief tag moved out of the PDF text |
+| 28 | `paper.§5.6` | … so six folds is the ceiling (Figure 4). The record, 12 folds, was set by Britney Gallivan in 2002 … | … so six single-direction folds is the ceiling (Figure 4). Her second formula, for folds in alternating directions, permits a seventh; we leave this to future work. The record, 12 folds, was set by Gallivan herself in 2002 … [Guinness World Records]. | Must-fix 1 / FC rows 43, 68 |
+| 29 | `paper.fig4` | label "wall"; caption "Figure 4. Scaling behaviour. The dashed line is our roadmap. The solid line is our sheet." | label "wall (same direction each time)" + an open dot "alternating: 7"; caption "Figure 4. Scaling behaviour for folds made the same way each time. …" | Must-fix 1 / FC row 68 |
+| 30 | `paper.§6` | The material for erasing pencil was named "rubber" by Joseph Priestley in 1770 [Priestley]. (+ two in-text [R§13.8] tags) | In 1770 Joseph Priestley recommended a new gum, sold by Edward Nairne, as "excellently adapted to the purpose of wiping from paper the mark of black-lead-pencil" [Priestley]; it soon came to be called rubber. (+ in-text tags replaced by [Popular Science] and [Hawkeye Forensic]) | Must-fix 2 / FC row 71; brief tags removed from the PDF text |
+| 31 | `paper.§6.tag` | (R§13.8 high / med) | (R§13.8 high / med · R§13.10 #6 med) | tag only |
+| 32 | `paper.§7` | … too shallow to clot [Ohio State] … the widely known figure of 451 °F comes from a novel [Bradbury]. | … too shallow to clot [Big Think; Vallabh] … the widely known figure of 451 °F was popularised by a novel [Bradbury]. | Must-fix 11 / FC rows 72, 73 |
+| 33 | `paper.§7.tag` | (R§3.4 high · R§3.3 med) | (R§3.4 · R§13.10 #17 · R§3.3 med) | tag only |
+| 34 | `paper.§8` | One life-cycle study of an 80 g/m² A4 sheet … Paper fibres can be recycled five to seven times … [hornification], | One life-cycle study of an A4 sheet of office paper … 4.64 g under ISO 14040/44 … Paper fibres are usually said to survive five to seven rounds of recycling …, although researchers are aiming for 25 [Karlstad University]; | Must-fix 6, 14 / FC rows 74, 75 |
+| 35 | `paper.§8.tag` | (R§13.4 high · R§3.5 high · R§13.3 high) | (R§13.4 high · R§3.5 · R§13.10 #9, #16 · R§13.3 high) | tag only |
+| 36 | `paper.table4` | Folds before the wall / 6 | Folds before the wall, same direction each time / 6 / + new row / Folds before the wall, alternating directions / 7 (ideal) | Must-fix 1 / FC row 68 |
+
+### 9.3 Research paper: references, page 8 (visual-designer: the PDF)
+
+| # | Id / location | Old | New | Why |
+|---|---|---|---|---|
+| 37 | `ref.Big Think (new) + Bradbury` | Bradbury, R. (1953). Fahrenheit 451. | Big Think. Here's why paper cuts hurt so damn much (web article). (new) · Bradbury, R. (1953). Fahrenheit 451. New York: Ballantine Books. | FC R1, row 72 |
+| 38 | `ref.Business Week` | Business Week (1975). The office of the future. (title to be confirmed) | Business Week (1975). The Office of the Future. Business Week, 30 June 1975. | FC R2 |
+| 39 | `ref.Dias & Arroja` | … Journal of Cleaner Production, 24, 30–35. | … Journal of Cleaner Production, 24, 30–35. doi:10.1016/j.jclepro.2011.11.005 | FC R3 |
+| 40 | `ref.DIN 476` | DIN 476 (1922). Paper formats. Deutsches Institut für Normung. | DIN 476 (1922). Papierformate. August 1922. | FC R4 |
+| 41 | `ref.EPRC` | European Paper Recycling Council (2025). Press release on the 2024 European paper recycling rate. | European Paper Recycling Council (2025). European Paper Recycling Council reports strong recycling rates for 2024. Press release, July 2025. | FC R5 |
+| 42 | `ref.Gallivan` | Gallivan, B. (2002). Folding paper in half twelve times. (title to be confirmed) | Gallivan, B. (2002). How to Fold Paper in Half Twelve Times: An "Impossible Challenge" Solved and Explained. Pomona, CA: Historical Society of Pomona Valley. | FC R6, §3 item 1 |
+| 43 | `ref.Hawkeye (new) + ISO 216 + Karlstad (new)` | ISO 216 (first edition 1975). Writing paper and certain classes of printed matter: trimmed sizes, A and B series. (to be confirmed) | Hawkeye Forensic. Can you erase the evidence? … (new) · ISO 216:2007. Writing paper and certain classes of printed matter — Trimmed sizes — A and B series, and indication of machine direction. Geneva: ISO (replaces ISO 216:1975). · Karlstad University. Mystery around hornification about to be solved (new) | FC R8, §3 item 4; new citations for paper §6 and §8 |
+| 44 | `ref.Ohio State → Popular Science (new) + Priestley` | Ohio State University Wexner Medical Center. Why do papercuts hurt so much? · Priestley, J. (1770). On the "rubber" … (to be confirmed) | Popular Science. How do erasers work? (new; the Ohio State article moves to "Vallabh, J." below) · Priestley, J. (1770). A Familiar Introduction to the Theory and Practice of Perspective. London: J. Johnson and J. Payne. | Must-fix 2 / FC R11, R12 |
+| 45 | `ref.Rauschenberg` | … San Francisco Museum of Modern Art. | … San Francisco Museum of Modern Art, accession 98.298. | FC R13 |
+| 46 | `ref.Sellen & Harper + Vallabh (new)` | Sellen, A. J., & Harper, R. H. R. (2003). … | Sellen, A. J., & Harper, R. H. R. (2002). … · Vallabh, J. (2025). Why do papercuts hurt so much? The Ohio State University Wexner Medical Center blog, 9 May 2025. (new) | Must-fix 10 / FC R14, R11 |
+
+### 9.4 Visual direction and brief-only notes
+
+| # | Id / location | Old | New | Why |
+|---|---|---|---|---|
+| 47 | `Part 5.6 c8 render` | a small, thick block (A4 folded six times, ≈ 26 × 37 mm, visibly layered) … | a slender bar: an A4 sheet folded six times the same way, ≈ 210 × 4.6 mm and 6.4 mm thick, 64 layers visible … | Must-fix 1 / FC D3 (a 26 × 37 mm block is an alternating fold) |
+| 48 | `Part 6 (delight list)` | WEIGHTS ("They weigh 4.99 g.") | WEIGHTS ("They weigh 4.99 g, by calculation.") | follows s13.btn.weights.tip |
+| 49 | `Part 1 (story tag)` | R§13.6: high for the wording, med for the year | published December 1689, 1690 on the title page; R§13.10 #15: high for both | FC row 1 (year upgraded) |
+| 50 | `Part 5.2 (shader note)` | about 94 % opaque | about 92–96 % opaque | FC D1 |
+| 51 | `Part 8 (researcher needs)` | five open requests | marked resolved, with the details; one optional item left (ScienceAlert details) | fact-check §3 |
+
+### 9.5 Reviewed and deliberately unchanged
+
+- `s09.r6` (bin: "Five to seven times, I'm told."): already hedged; FC row 37 rates it correct as a joke.
+- `s04.c8.o` and paper §2 ("Rauschenberg spent weeks erasing…"): FC rows 26 and 56 rate "weeks" correct (it covers both "about a month" and "two months").
+- `s05.fallback` ("Every piece would still be 1 : √2."): torn halves are 148.5 × 210 mm and 105 × 148.5 mm, so the ratio is 1.414 to three decimals (derived).
+- `s06.e3` (Samarkand) and `s06.e10` (Keller): correct as written; the optional extra detail (Fenerty) isn't needed for the joke.
+- The headline `s11.c8.h` ("Our roadmap reaches the Moon. Our sheet reaches 6.4 mm."): still true. Six same-direction folds give 64 layers = 6.4 mm (R§13.2).
+- Everything the fact-check marked **correct** (A-series numbers, 440,000 km, 75.1 %, the Dias & Arroja figures, Locke, C5, the Guinness rules, 451 °F as hedged, Lichtenberg, 136 years).
+
+**Total: 51 changelog entries** covering 26 site-copy ids, 14 paper changes (11 to the text, figures and tables, 3 to source tags only), 15 reference lines (11 corrected or completed, with the Ohio State entry now under Vallabh, plus 4 added: Big Think, Hawkeye Forensic, Karlstad University and Popular Science) and 5 design or brief notes.

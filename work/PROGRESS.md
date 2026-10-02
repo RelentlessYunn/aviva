@@ -39,12 +39,12 @@ Branch: `claude/elegant-curie-dduigw` → PR into `main` (user merges).
 - 2026-10-02 — **Paused by the user**: all four Phase 3 agents (paper look-dev, design system, skeleton, brief fact-check) were stopped from the user's side. Partial work committed as WIP: `docs/vendor/` (copy script ran), `docs/css/tokens.css` (provisional), `docs/js/paper/textures.js`, `docs/js/paper/crumple-grid.js`, `work/scripts/crumple/`, `work/scripts/design/`. No fact-check file was written yet.
 - 2026-10-02 12:50 UTC — User said continue. The stopped agents could not be resumed, so four fresh agents were launched with standalone briefs that build on the partial files: paper look-dev (VD #1), design system (VD #2), skeleton (WD), brief fact-check (WR). Local server restarted on :8080.
 - 2026-10-02 — Brief fact-check done (`work/reviews/brief-factcheck.md`, ~78 claims, 14 must-fixes: one-direction 'six folds' (alternate allows 7 on A4; lead verified), Priestley wording, 'Nothing else does', distillation wording, 'nearly doubled', 5–7 cycles hedge, ±2.5 %, Cai Lun materials, 'oldest surviving', Sellen & Harper 2002, paper-cut cite, A10 rounding, Fangmatan map, CO₂e figure). Part 8 reference details confirmed. Sent to the creative-director.
+- 2026-10-02 — Brief updated with all fact-check corrections; **Part 9 changelog** (51 entries, old → new, grouped by owner). Web-developer and design-system designer told to apply 9.1 / 9.2.
 
 ## Running now
 - visual-designer #1 → paper module `docs/js/paper/`, lab `docs/lab/paper.html`, `work/05b-paper-module.md`, contact sheet `work/screenshots/lab/contact-final.jpg`
 - visual-designer #2 → tokens (final), fonts, print.css, 2D assets, `docs/research/` PDF + .bib + .obj, `work/05-design-system.md`, `docs/lab/styleguide.html`
 - web-developer → technical skeleton (index.html with all copy, Lenis+ScrollTrigger, fixed canvas, placeholder sheet through all sections, fallback, reduced motion)
-- creative-director → applying fact-check corrections to `work/04-creative-brief.md` + Part 9 changelog
 
 ## Next step
 - Judge the paper look-dev myself (contact sheet) and iterate until it's clearly real. Send fact-check corrections to the creative-director (new agent; brief owner). Review the skeleton screenshots. Then Phase 4.
