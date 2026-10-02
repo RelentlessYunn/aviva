@@ -37,14 +37,13 @@ Branch: `claude/elegant-curie-dduigw` → PR into `main` (user merges).
 - 2026-10-02 — Research §13 added: ISO 216 A0–A10 table, derived numbers re-checked (all correct), EU rate → use 75.1 % (2024) not 79.3 %, Dias & Arroja 2012 carbon, Guinness paper rules (≤ A4, ≤ 100 g/m²), Locke verbatim (1689/1690), Rauschenberg 'about a month' (his words), pencil/eraser facts. Corrections forwarded to the creative-director.
 - 2026-10-02 — Creative brief accepted (`work/04-creative-brief.md`, 1,189 lines, ≈ 58 vh). Decisions #16–#20. Phase 3 parallel tasks launched.
 - 2026-10-02 — **Paused by the user**: all four Phase 3 agents (paper look-dev, design system, skeleton, brief fact-check) were stopped from the user's side. Partial work committed as WIP: `docs/vendor/` (copy script ran), `docs/css/tokens.css` (provisional), `docs/js/paper/textures.js`, `docs/js/paper/crumple-grid.js`, `work/scripts/crumple/`, `work/scripts/design/`. No fact-check file was written yet.
+- 2026-10-02 12:50 UTC — User said continue. The stopped agents could not be resumed, so four fresh agents were launched with standalone briefs that build on the partial files: paper look-dev (VD #1), design system (VD #2), skeleton (WD), brief fact-check (WR). Local server restarted on :8080.
 
 ## Running now
-- Nothing. Paused by the user (2026-10-02).
+- visual-designer #1 → paper module `docs/js/paper/`, lab `docs/lab/paper.html`, `work/05b-paper-module.md`, contact sheet `work/screenshots/lab/contact-final.jpg`
+- visual-designer #2 → tokens (final), fonts, print.css, 2D assets, `docs/research/` PDF + .bib + .obj, `work/05-design-system.md`, `docs/lab/styleguide.html`
+- web-developer → technical skeleton (index.html with all copy, Lenis+ScrollTrigger, fixed canvas, placeholder sheet through all sections, fallback, reduced motion)
+- web-researcher → `work/reviews/brief-factcheck.md` + missing reference details
 
 ## Next step
-- **On resume** (only when the user says to continue), re-launch the four Phase 3 tasks from their briefs, telling each to build on the partial files already on disk:
-  1. visual-designer #1: paper module + lab (`docs/js/paper/`, `docs/lab/paper.html`, `work/05b-paper-module.md`); continue from `textures.js`, `crumple-grid.js`, `work/scripts/crumple/`.
-  2. visual-designer #2: design system (`docs/css/tokens.css` exists, provisional), fonts, print.css, 2D assets, research PDF, `work/05-design-system.md`, styleguide.
-  3. web-developer: skeleton (`docs/vendor/` already copied; esbuild came via npx, so pin it as a devDependency).
-  4. web-researcher: `work/reviews/brief-factcheck.md` + missing reference details (brief Part 8).
-- Then: judge the paper look-dev myself, apply fact-check fixes via the creative-director, review the skeleton, Phase 4.
+- Judge the paper look-dev myself (contact sheet) and iterate until it's clearly real. Send fact-check corrections to the creative-director (new agent; brief owner). Review the skeleton screenshots. Then Phase 4.
