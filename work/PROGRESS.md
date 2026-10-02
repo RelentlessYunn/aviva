@@ -37,7 +37,8 @@ Branch: `claude/elegant-curie-dduigw` → PR into `main` (user merges).
 
 ## Running now
 - creative-director → `work/04-creative-brief.md` (Phase 3)
-- web-researcher → fill fact gaps in `work/01-research.md` (ISO 216 table, 98.43 m paper rules, EU 79.3 % check, carbon per sheet)
+- web-researcher → fill fact gaps in `work/01-research.md` §13 (ISO 216 table, derived checks, EU 79.3 %, carbon, record rules, Locke, pencil facts)
+- visual-designer (task 1 of 2) → paper module `docs/js/paper/`, lab `docs/lab/paper.html`, vendor via copy script; started early because the paper needs the most iteration. Task 2 (design system + 2D assets) after the brief.
 
 ## Next step
 - When the brief lands: launch visual-designer (design system + paper look-dev), web-developer (skeleton), web-researcher (brief fact-check) in parallel.
