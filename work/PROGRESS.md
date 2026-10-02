@@ -35,10 +35,13 @@ Branch: `claude/elegant-curie-dduigw` → PR into `main` (user merges).
 - 2026-10-02 07:10 UTC — Creative-director hit a usage limit after writing Concept A; partial file committed; agent resumed for B, C and the comparison.
 - 2026-10-02 — Concepts A/B/C in `work/03-concepts.md`. Lead scores A 43.5 · C 41.5 · B 39.5. **Chosen: Concept A "Void of All Characters" (aviva A4, "Pre-trained on nothing.")** with 5 enrichments (decisions #14). **Phase 2 complete.**
 - 2026-10-02 — Research §13 added: ISO 216 A0–A10 table, derived numbers re-checked (all correct), EU rate → use 75.1 % (2024) not 79.3 %, Dias & Arroja 2012 carbon, Guinness paper rules (≤ A4, ≤ 100 g/m²), Locke verbatim (1689/1690), Rauschenberg 'about a month' (his words), pencil/eraser facts. Corrections forwarded to the creative-director.
+- 2026-10-02 — Creative brief accepted (`work/04-creative-brief.md`, 1,189 lines, ≈ 58 vh). Decisions #16–#20. Phase 3 parallel tasks launched.
 
 ## Running now
-- creative-director → `work/04-creative-brief.md` (Phase 3)
-- visual-designer (task 1 of 2) → paper module `docs/js/paper/`, lab `docs/lab/paper.html`, vendor via copy script; started early because the paper needs the most iteration. Task 2 (design system + 2D assets) after the brief.
+- visual-designer #1 → paper module `docs/js/paper/`, lab `docs/lab/paper.html`, docs in `work/05b-paper-module.md`
+- visual-designer #2 → `docs/css/tokens.css` (token contract), fonts, print.css, 2D assets, `docs/research/` PDF + .bib + .obj, `work/05-design-system.md`, `docs/lab/styleguide.html`
+- web-developer → technical skeleton (vendor, index.html with all copy, Lenis+ScrollTrigger, fixed canvas, placeholder sheet through all sections, fallback, reduced motion)
+- web-researcher → `work/reviews/brief-factcheck.md` + missing reference details
 
 ## Next step
-- When the brief lands: launch visual-designer (design system + paper look-dev), web-developer (skeleton), web-researcher (brief fact-check) in parallel.
+- Review the paper look-dev screenshots myself and iterate until it's clearly real. Send fact-check corrections to the creative-director. Review the skeleton screenshots. Then Phase 4.
